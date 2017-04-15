@@ -29,92 +29,36 @@ from collections import OrderedDict
 from configparser import ConfigParser
 from exceptions import AirflowConfigException
 
-class AirflowConfigParser(ConfigParser):
-    # These configuration elements can be fetched as the stdout of commands
-    # following the "{section}__{name}__cmd" pattern, the idea behind this
-    # is to not store password on boxes in text files.
+CONFIG_FILE_PATH = os.path.join(os.path.dirname(__file__), '/../config/airflow.cfg')
 
+class AirflowConfigParser(ConfigParser):
     as_command_stdout = {
         ('core', 'sql_alchemy_conn'),
         ('core', 'fernet_key'),
         ('celery', 'broker_url'),
         ('celery', 'celery_result_backend')
     }
-    config_templates_dir = os.path.join(os.path.dirname(__file__), 'config_templates')
 
     def __init__(self, *args, **kwargs):
-        ConfigParser.__init__(self, *args, **kwargs)
-        default_template = gen_default_config()
-        test_template = gen_default_config()
-        self.read_string(parameterized_config(default_template))
+        super(ConfigParser, self).__init__(*args, **kwargs)
         self.is_validated = False
+        self.__read__(CONFIG_FILE_PATH)
 
-    @staticmethod
-    def parameterized_config(template):
-        """
-        Generates a configuration from the provided template + variables defined in
-        current scope
-        :param template: a config content templated with {{variables}}
-        """
-        all_vars = {k:v for d in [globals(), locals()] for k, v in d.items()}
-        return template.format(**all_vars)
+    def __read__(self, filenames):
+        ConfigParser.read(self, filenames)
+        self.__validate__()
 
-    @staticmethod
-    def gen_default_config():
-        with open(os.path.join(config_templates_dir, 'default_airflow.cfg')) as f:
-            default_config = f.read()
-        return default_config
-
-    @staticmethod
-    def gen_test_config():
-        with open(os.path.join(config_templates_dir, 'default_test.cfg')) as f:
-            test_config = f.read()
-        return test_config
-
-    def read_string(self, string, source='<string>'):
-        """
-        Read configuration from a string.
-
-        A backwards-compatible version of the ConfigParser.read_string()
-        method that was introduced in Python 3.
-        """
-        # Python 3 added read_string() method
-        if six.PY3:
-            ConfigParser.read_string(self, string, source=source)
-        # Python 2 requires StringIO buffer
-        else:
-            import StringIO
-            self.readfp(StringIO.StringIO(string))
-
-    def _validate(self):
-        if (
-                self.get("core", "executor") != 'SequentialExecutor' and
-                "sqlite" in self.get('core', 'sql_alchemy_conn')):
-            raise AirflowConfigException(
-                "error: cannot use sqlite with the {}".format(
-                    self.get('core', 'executor')))
-
-        elif (
-            self.getboolean("webserver", "authenticate") and
-            self.get("webserver", "owner_mode") not in ['user', 'ldapgroup']
-        ):
-            raise AirflowConfigException(
-                "error: owner_mode option should be either "
-                "'user' or 'ldapgroup' when filtering by owner is set")
-
-        elif (
-            self.getboolean("webserver", "authenticate") and
-            self.get("webserver", "owner_mode").lower() == 'ldapgroup' and
-            self.get("webserver", "auth_backend") != (
-                'airflow.contrib.auth.backends.ldap_auth')
-        ):
-            raise AirflowConfigException(
-                "error: attempt at using ldapgroup "
-                "filtering without using the Ldap backend")
-
+    def __validate__(self):
+        if (self.get("core", "executor") != 'SequentialExecutor' and "sqlite" in self.get('core', 'sql_alchemy_conn')):
+            raise AirflowConfigException("error: cannot use sqlite with the {}".format(self.get('core', 'executor')))
+        elif (self.getboolean("webserver", "authenticate") and self.get("webserver", "owner_mode") not in ['user', 'ldapgroup']):
+            raise AirflowConfigException("error: owner_mode option should be either 'user' or 'ldapgroup' when filtering by owner is set")
+        elif (self.getboolean("webserver", "authenticate") and self.get("webserver", "owner_mode").lower() == 'ldapgroup' and
+                self.get("webserver", "auth_backend") != ('airflow.contrib.auth.backends.ldap_auth')):
+            raise AirflowConfigException("error: attempt at using ldapgroup filtering without using the Ldap backend")
         self.is_validated = True
 
-    def _get_env_var_option(self, section, key):
+    def __get_env_var_option__(self, section, key):
         # must have format AIRFLOW__{SECTION}__{KEY} (note double underscore)
         env_var = 'AIRFLOW__{S}__{K}'.format(S=section.upper(), K=key.upper())
         if env_var in os.environ:
@@ -178,9 +122,6 @@ class AirflowConfigParser(ConfigParser):
     def getfloat(self, section, key):
         return float(self.get(section, key))
 
-    def read(self, filenames):
-        ConfigParser.read(self, filenames)
-        self._validate()
 
     def as_dict(self, display_source=False, display_sensitive=False):
         """
@@ -248,6 +189,10 @@ class AirflowConfigParser(ConfigParser):
         # then read any "custom" test settings
         self.read(TEST_CONFIG_FILE)
 
-logging.info("Reading the config from " + AIRFLOW_CONFIG)
-conf = AirflowConfigParser()
-conf.read(AIRFLOW_CONFIG)
+###########################################################################
+airflow_conf = None
+
+def get_airflow_config():
+    if airflow_conf is None:
+        airflow_conf = AirflowConfigParser()
+    return airflow_conf
