@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#
 import logging
 import socket
 import six
@@ -22,8 +22,8 @@ from flask_cache import Cache
 from flask_wtf.csrf import CsrfProtect
 csrf = CsrfProtect()
 
-import models
-
+import airflow
+from airflow import models
 from airflow.settings import Session
 
 from airflow.www.blueprints import routes
@@ -149,9 +149,11 @@ def create_app(config=None, testing=False):
         @app.teardown_appcontext
         def shutdown_session(exception=None):
             settings.Session.remove()
+
         return app
 
 app = None
+
 
 def cached_app(config=None):
     global app
