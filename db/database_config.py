@@ -23,9 +23,13 @@ class DatabaseConfig(MysqlConfig):
     T_FLOW_DAG = 'flow_dag'
     T_FLOW_Task = 'flow_task'
     T_FLOW_DAG_HISTORY = 'flow_dag_history'
+    T_FLOW_DAG_HISTORY = 'flow_task_history'
+    T_FLOW_MACHINE_GROUP = 'flow_machine_group'
 
     # tables struct
     S_FLOW_USER_INFO = table_struct.FlowUserInfo()
     S_FLOW_DAG = table_struct.FlowDag()
     S_FLOW_Task = table_struct.FlowTask()
     S_FLOW_DAG_HISTORY = table_struct.FlowDagHistory()
+    S_FLOW_TASK_HISTORY = table_struct.FlowTaskHistory()
+    S_FLOW_MACHINE_GROUP = table_struct.FlowMachineGroup()

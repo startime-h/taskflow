@@ -89,3 +89,31 @@ class FlowDagHistory():
     EndTime = 'end_time'
     Stutus = 'status'
 
+class FlowTaskHistory():
+    '''
+    @id: task history id
+    @dag_id: dag id
+    @task_id: task id
+    @start_time: task start time
+    @end_time: task end time
+    @status: task run status [Running/Terminated/Failed]
+    '''
+
+    ID = 'id'
+    DagId = 'dag_id'
+    TaskId = 'task_id'
+    StartTime = 'start_time'
+    EndTime = 'end_time'
+    Stutus = 'status'
+
+class FlowMachineGroup():
+    '''
+    @id: machine id
+    @group_name: machine group name
+    @machine: machine ip address
+    '''
+
+    ID = 'id'
+    GroupName = 'group_name'
+    Machine = 'machine'
+
