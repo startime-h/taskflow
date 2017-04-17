@@ -1,0 +1,9 @@
+use test;
+show tables;
+desc user_info;
+desc project_info;
+desc dag_info;
+desc task_info;
+desc machine_info;
+desc dag_run_history;
+desc task_run_history;
