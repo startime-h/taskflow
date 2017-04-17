@@ -19,17 +19,19 @@ class DatabaseConfig(MysqlConfig):
     charset = 'utf-8'
 
     # tables name
-    T_FLOW_USER_INFO = 'flow_user_info'
-    T_FLOW_DAG = 'flow_dag'
-    T_FLOW_Task = 'flow_task'
-    T_FLOW_DAG_HISTORY = 'flow_dag_history'
-    T_FLOW_DAG_HISTORY = 'flow_task_history'
-    T_FLOW_MACHINE_GROUP = 'flow_machine_group'
+    T_USER_INFO = 'user_info'
+    T_PROJECT_INFO = 'project_info'
+    T_DAG_INFO = 'dag_info'
+    T_TASK_INFO = 'task_info'
+    T_MACHINE_INFO = 'machine_info'
+    T_DAG_RUN_HISTORY = 'dag_run_history'
+    T_TASK_RUN_HISTORY = 'task_run_history'
 
     # tables struct
-    S_FLOW_USER_INFO = table_struct.FlowUserInfo()
-    S_FLOW_DAG = table_struct.FlowDag()
-    S_FLOW_Task = table_struct.FlowTask()
-    S_FLOW_DAG_HISTORY = table_struct.FlowDagHistory()
-    S_FLOW_TASK_HISTORY = table_struct.FlowTaskHistory()
-    S_FLOW_MACHINE_GROUP = table_struct.FlowMachineGroup()
+    S_USER_INFO = table_struct.UserInfo()
+    S_PROJECT_INFO = table_struct.ProjectInfo()
+    S_DAG_INFO = table_struct.DagInfo()
+    S_TASK_INFO = table_struct.TaskInfo()
+    S_MACHINE_INFO = table_struct.MachineInfo()
+    S_DAG_RUN_HISTORY = table_struct.DagRunHistory()
+    S_TASK_RUN_HISTORY = table_struct.TaskRunHistory()
