@@ -13,13 +13,13 @@ user_name: 用户名称
 
 ## project_info  
 CREATE TABLE project_info (  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iid   INT NOT NULL AUTO_INCREMENT,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iproject_id VARCHAR(255) NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iproject_name VARCHAR(255) NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;icreate_user_id INT NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;icreate_time  datetime NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ipermission_users VARCHAR(255) NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iPRIMARY KEY (id)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_id INT NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_name VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_user_id INT NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_time  datetime NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;permission_users VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  
 
 id: 主键id  
@@ -32,17 +32,17 @@ permission_users: 有权限用户列表
 ## dag_info  
 CREATE TABLE dag_info  (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_id  VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_id  INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_name VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;valid INT NOT NULL default 0,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_id INT NOT NULL,   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_user_id  VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_user_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expire_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scheduler_interval  INT NOT NULL,    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;skip_failed  INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify_time datetime NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_status  INT NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_status  VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_start_time datetime NOT NULL,   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;head_tasks_list VARCHAR(2048) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
@@ -59,7 +59,7 @@ expire_time: 失效时间
 scheduler_interval: 调度周期  
 skip_failed: 是否跳过failed节点 定期调度  
 modify_time: dag更新时间  
-dag_status: dag状态  Not Running／Running／Failed／Terminted  对应 [0,1,2,3]  
+dag_status: dag状态  Not Running／Running／Failed／Terminted
 next_start_time: 下一次启动时间  
 head_tasks_list: dag 头节点列表  
 
@@ -67,7 +67,7 @@ head_tasks_list: dag 头节点列表
 CREATE TABLE task_info (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_id INT NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_id VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_name VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_machine VARCHAR(255) NOT NULL,    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_user VARCHAR(255) NOT NULL,  
@@ -75,7 +75,7 @@ CREATE TABLE task_info (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_command  VARCHAR(2048) NOT NULL,   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_timeout  INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retry_times INT NOT NULL default 1,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_status  INT NOT NULL default 0,   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_status  VARCHAR(255) NOT NULL default 0,   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pre_task_list  VARCHAR(2048) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_task_list  VARCHAR(2048) NOT NULL,  
@@ -91,13 +91,13 @@ run_user: 运行用户，root还是一般用户
 run_command: 运行命令  
 run_timeout: 运行超时时间  
 retry_times: 重试次数  
-task_status:  task 状态  Not Running／Running／Failed／Terminted  对应 [0,1,2,3]  
+task_status:  task 状态  Not Running／Running／Failed／Terminted
 
 ## machine_info  
 CREATE TABLE machine_info (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_name VARCHAR(255),  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_ip VARCHAR(255),  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_name VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_ip VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  
 
@@ -111,23 +111,23 @@ CREATE TABLE dag_run_history (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_id  VARCHAR(255) NOT NULL,      
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end_time datetime NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status  INT NOT NULL default 3,     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status  VARCHAR(255) NOT NULL default 3,     
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  
 
-id：task id，自增  
+id：主键id，自增  
 dag_id：dag id  
 start_time：dag 启动时间  
 end_time：dag 结束时间  
-status：dag 状态  Not Running／Running／Failed／Terminted  对应 [0,1,2,3]  
+status：dag 状态  Failed／Terminted  
 
 ## task_run_history  
 CREATE TABLE task_run_history (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_id VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end_time datetime NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status  INT NOT NULL default 3,     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status VARCHAR(255) NOT NULL default 3,     
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  
 
@@ -135,4 +135,17 @@ id：task id，自增
 task_id：task id  
 start_time：启动时间  
 end_time：结束时间  
-status：task 状态, Not Running／Running／Failed／Terminted  对应 [0,1,2,3]  
+status：task 状态, Failed／Terminted
+
+## task_pending_queue
+CREATE TABLE task_pending_queue (  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_id INT NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_ip VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status VARCHAR(255) NOT NULL,     
+);  
+
+id：task id，自增  
+machine_ip: machine ip address  
+status：task 状态, Start/Running/Failed/Terminated
+
+
