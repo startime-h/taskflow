@@ -26,6 +26,7 @@ class DatabaseConfig(MysqlConfig):
     T_MACHINE_INFO = 'machine_info'
     T_DAG_RUN_HISTORY = 'dag_run_history'
     T_TASK_RUN_HISTORY = 'task_run_history'
+    T_TASK_PENDING_QUEUE = 'task_pending_queue'
 
     # tables struct
     S_USER_INFO = table_struct.UserInfo()
@@ -35,3 +36,4 @@ class DatabaseConfig(MysqlConfig):
     S_MACHINE_INFO = table_struct.MachineInfo()
     S_DAG_RUN_HISTORY = table_struct.DagRunHistory()
     S_TASK_RUN_HISTORY = table_struct.TaskRunHistory()
+    S_TASK_PENDING_QUEUE = table_struct.TaskPendingQueue()

@@ -3,6 +3,7 @@ CREATE TABLE user_info (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_name VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_email VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  
   

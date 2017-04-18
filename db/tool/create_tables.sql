@@ -5,13 +5,14 @@ CREATE TABLE user_info (
     id   INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
     user_name VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
 
 drop table if exists project_info;
 CREATE TABLE project_info (
     id   INT NOT NULL AUTO_INCREMENT,
-    project_id VARCHAR(255) NOT NULL,
+    project_id INT NOT NULL,
     project_name VARCHAR(255) NOT NULL,
     create_user_id INT NOT NULL,
     create_time  datetime NOT NULL,
@@ -22,11 +23,11 @@ CREATE TABLE project_info (
 drop table if exists dag_info;
 CREATE TABLE dag_info  (
     id   INT NOT NULL AUTO_INCREMENT,
-    dag_id  VARCHAR(255) NOT NULL,
+    dag_id  INT NOT NULL,
     dag_name VARCHAR(255) NOT NULL,
     valid INT NOT NULL default 0,
     project_id INT NOT NULL, 
-    create_user_id  VARCHAR(255) NOT NULL,
+    create_user_id INT NOT NULL,
     create_time datetime NOT NULL,
     expire_time datetime NOT NULL,
     scheduler_interval  INT NOT NULL,  
@@ -42,7 +43,7 @@ drop table if exists task_info;
 CREATE TABLE task_info (
     id   INT NOT NULL AUTO_INCREMENT,
     dag_id INT NOT NULL,
-    task_id VARCHAR(255) NOT NULL,
+    task_id INT NOT NULL,
     task_name VARCHAR(255) NOT NULL,
     run_machine VARCHAR(255) NOT NULL,  
     run_user VARCHAR(255) NOT NULL,
@@ -68,7 +69,7 @@ CREATE TABLE machine_info (
 drop table if exists dag_run_history;
 CREATE TABLE dag_run_history (
     id   INT NOT NULL AUTO_INCREMENT,
-    dag_id  VARCHAR(255) NOT NULL,         
+    dag_id  INT NOT NULL,         
     start_time datetime NOT NULL,
     end_time datetime NOT NULL,
     status  INT NOT NULL default 3,   
@@ -78,9 +79,18 @@ CREATE TABLE dag_run_history (
 drop table if exists task_run_history;
 CREATE TABLE task_run_history (
     id   INT NOT NULL AUTO_INCREMENT,
-    task_id  VARCHAR(255) NOT NULL,         
+    task_id  INT NOT NULL,         
     start_time datetime NOT NULL,
     end_time datetime NOT NULL,
     status  INT NOT NULL default 3,   
+    PRIMARY KEY (id)
+);
+
+drop table if exists task_pending_queue;
+CREATE TABLE task_pending_queue (
+    id   INT NOT NULL AUTO_INCREMENT,
+    task_id INT NOT NULL, 
+    machine_ip  VARCHAR(255)  NOT NULL,
+    status VARCHAR(255) NOT NULL,   
     PRIMARY KEY (id)
 );

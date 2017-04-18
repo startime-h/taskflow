@@ -15,6 +15,7 @@ class UserInfo():
     ID = 'id'
     UserId = 'user_id'
     UserName = 'user_name'
+    UserEmail = 'user_email'
 
 class ProjectInfo():
     '''
@@ -48,10 +49,10 @@ class DagInfo():
     @skip_failed: 1: skip
                   0: no skip
     @modify_time: dag modify time
-    @dag_status: 0 -> Not Running
-                 1 -> Running
-                 2 -> Failed
-                 3 -> Terminated
+    @dag_status: Not Running
+                 Running
+                 Failed
+                 Terminated
     @next_start_time: dag next start time
     @head_tasks_list: dag head tasks list
     '''
@@ -83,10 +84,10 @@ class TaskInfo():
     @run_command: task run shell command
     @run_timeout: task run timeout
     @retry_times: task run retry times
-    @task_status: 0 -> Not Running
-                  1 -> Running
-                  2 -> Failed
-                  3 -> Terminated
+    @task_status: Not Running
+                  Running
+                  Failed
+                  Terminated
     @modify_time: task modify time
     @pre_task_list: task prefix task list
     @next_task_list: task next task list
@@ -125,6 +126,8 @@ class DagRunHistory():
     @start_time: dag start time
     @end_time: dag end time
     @status: dag status
+             Failed
+             Terminated
     '''
 
     ID = 'id'
@@ -140,6 +143,8 @@ class TaskRunHisgory():
     @start_time: task start time
     @end_time: task end time
     @status: task status
+             Failed
+             Terminated
     '''
 
     ID = 'id'
@@ -147,4 +152,16 @@ class TaskRunHisgory():
     StartTime = 'start_time'
     EndTime = 'end_time'
     Status = 'status'
+
+class TaskPendingQueu():
+    '''
+    @task_id: task id
+    @machine_ip: machine ip, machine group
+    @status: Start/Running/Failed/Terminated
+    '''
+
+    TaskId = 'task_id'
+    MachineIp = 'machine_ip'
+    Status = 'status'
+
 
