@@ -10,6 +10,7 @@ CREATE TABLE user_info (
 id: 主键id  
 user_id: 用户id，类似工号，不重复  
 user_name: 用户名称  
+user_email: 用户邮箱  
 
 ## project_info  
 CREATE TABLE project_info (  
@@ -59,7 +60,7 @@ expire_time: 失效时间
 scheduler_interval: 调度周期  
 skip_failed: 是否跳过failed节点 定期调度  
 modify_time: dag更新时间  
-dag_status: dag状态  Not Running／Running／Failed／Terminted
+dag_status: dag状态  Not Running／Running／Failed／Terminted  
 next_start_time: 下一次启动时间  
 head_tasks_list: dag 头节点列表  
 
