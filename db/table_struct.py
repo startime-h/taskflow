@@ -3,7 +3,17 @@
 
 import os
 import sys
-import sys_path
+
+################ tables ##################
+T_USER_INFO = 'user_info'
+T_PROJECT_INFO = 'project_info'
+T_DAG_INFO = 'dag_info'
+T_TASK_INFO = 'task_info'
+T_MACHINE_INFO = 'machine_info'
+T_DAG_RUN_HISTORY = 'dag_run_history'
+T_TASK_RUN_HISTORY = 'task_run_history'
+T_TASK_PENDING_QUEUE = 'task_pending_queue'
+
 
 class UserInfo():
     '''
