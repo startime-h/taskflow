@@ -35,6 +35,7 @@ class Config():
             self.config_dict = config_dict
         except Exception,e:
             logger.error('parse config file:[%s] exception:[%s]' % (config_file, str(e)))
+            self.config_dict = dict()
             pass
 
     def has_section(self, section):
