@@ -141,12 +141,8 @@ status：task 状态, Failed／Terminted
 ## task_pending_queue
 CREATE TABLE task_pending_queue (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_id INT NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_ip VARCHAR(255) NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status VARCHAR(255) NOT NULL,     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_ip VARCHAR(255) NOT NULL
 );  
 
 id：task id，自增  
 machine_ip: machine ip address  
-status：task 状态, Start/Running/Failed/Terminated
-
-

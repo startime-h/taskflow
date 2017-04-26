@@ -91,6 +91,5 @@ CREATE TABLE task_pending_queue (
     id   INT NOT NULL AUTO_INCREMENT,
     task_id INT NOT NULL, 
     machine_ip  VARCHAR(255)  NOT NULL,
-    status VARCHAR(255) NOT NULL,   
     PRIMARY KEY (id)
 );

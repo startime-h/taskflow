@@ -14,7 +14,7 @@ T_DAG_RUN_HISTORY = 'dag_run_history'
 T_TASK_RUN_HISTORY = 'task_run_history'
 T_TASK_PENDING_QUEUE = 'task_pending_queue'
 
-
+################ structs ##################
 class UserInfo():
     '''
     @id: primary key
@@ -167,11 +167,7 @@ class TaskPendingQueu():
     '''
     @task_id: task id
     @machine_ip: machine ip, machine group
-    @status: Start/Running/Failed/Terminated
     '''
 
     TaskId = 'task_id'
     MachineIp = 'machine_ip'
-    Status = 'status'
-
-

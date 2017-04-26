@@ -39,7 +39,7 @@ class Config():
             pass
 
     def has_section(self, section):
-        return section in self.config_dict:
+        return section in self.config_dict
 
     def has_section_key(self, section, key):
         return section in self.config_dict and key in self.config_dict[section]
@@ -65,7 +65,7 @@ class Config():
         del self.config_dict[section][key]
 
     def set_section_key(self, section, key, value):
-        if has_section_key(section, key)
+        if has_section_key(section, key):
             self.config_dict[section][key] = value
         else:
             self.add_section_key(section, key, value)
