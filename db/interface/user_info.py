@@ -35,7 +35,7 @@ def select_user_info(user_id, user_name = '', user_email = ''):
     if user_email not in ['', None]:
         cond_map[table_struct.UserInfo.UserEmail] = table_struct.UserInfo.UserId = user_email
     # do select
-    mysql = MysqlWrapper()
+    mysql = mysql_wrapper.MysqlWrapper()
     rows = mysql.select(table, cond_map)
     print rows
 

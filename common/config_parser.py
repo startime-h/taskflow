@@ -60,17 +60,17 @@ class Config():
         del self.config_dict[section]
 
     def delete_section_key(self, section, key):
-        if not has_section_key(section, key):
+        if not self.has_section_key(section, key):
             return
         del self.config_dict[section][key]
 
     def set_section_key(self, section, key, value):
-        if has_section_key(section, key):
+        if self.has_section_key(section, key):
             self.config_dict[section][key] = value
         else:
             self.add_section_key(section, key, value)
 
     def get_section_key(self, section, key):
-        if has_section_key(section, key):
+        if self.has_section_key(section, key):
             return self.config_dict[section][key]
         return None

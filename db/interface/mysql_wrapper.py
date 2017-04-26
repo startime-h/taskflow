@@ -4,6 +4,7 @@
 import os
 import sys
 import time
+import logging
 import MySQLdb
 
 from common import logging_config
@@ -18,7 +19,7 @@ DB_CONF_PATH = sys_path.__grandfather_dir__+ '/conf/db.cfg'
 class MysqlWrapper(object):
     def __init__(self):
         self.db_config = config_parser.Config(DB_CONF_PATH)
-        if not _valid_config_(self.db_config):
+        if not self._valid_config_(self.db_config):
             logger.error('Invalid db config')
             sys.exit(2)
         self.connect = self._db_connect_(self.db_config)
@@ -53,13 +54,13 @@ class MysqlWrapper(object):
         user = db_config.get_section_key('mysql', 'user')
         password = db_config.get_section_key('mysql', 'password')
         db = db_config.get_section_key('mysql', 'db')
-        charset = 'utf-8'
+        charset = 'utf8'
         if db_config.get_section_key('mysql', 'charset'):
             charset = db_config.get_section_key('mysql', 'charset')
 
-        logger.info('success connect to mysql db. host:[%s] port:[%s] user:[%s] password:[%s] db:[%s]') \
-                % (host, port, user, password, db)
-        return MySQLdb.connect(host=host, port=port, user=user, passwd=passwd, db=db, charset=charset)
+        logger.info('success connect to mysql db. host:[%s] port:[%s] user:[%s] password:[%s] db:[%s]' \
+                % (host, port, user, password, db))
+        return MySQLdb.connect(host=host, port=int(port), user=user, passwd=password, db=db, charset=charset)
 
     def _execute_sql_(self, sql):
         """
