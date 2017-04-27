@@ -47,7 +47,6 @@ class MysqlWrapper(object):
 
         return connect obj
         """
-        logger.info('start connect to mysql db ...')
 
         host = db_config.get_section_key('mysql', 'hostname')
         port = db_config.get_section_key('mysql', 'port')
@@ -58,8 +57,6 @@ class MysqlWrapper(object):
         if db_config.get_section_key('mysql', 'charset'):
             charset = db_config.get_section_key('mysql', 'charset')
 
-        logger.info('success connect to mysql db. host:[%s] port:[%s] user:[%s] password:[%s] db:[%s]' \
-                % (host, port, user, password, db))
         return MySQLdb.connect(host=host, port=int(port), user=user, passwd=password, db=db, charset=charset)
 
     def _execute_sql_(self, sql):
@@ -73,6 +70,15 @@ class MysqlWrapper(object):
         except Exception, e:
             logger.error('exceute sql:[%s] exception:[%s]' % (sql, str(e)))
 
+    def _rollback(self):
+        """
+        rollbock sql
+        """
+        try:
+            self.connect.rollback()
+        except Exception, e:
+            logger.error('rollback exception:[%s]' % str(e))
+
     def gen_select_sql(self, table, cond_map, fields):
         try:
             sql = 'select %s from %s' % (fields, table)
@@ -82,8 +88,8 @@ class MysqlWrapper(object):
             if condition.endswith(' and '):
                 condition = condition[:-5]
             if condition == '':
-                condition = 'where 1 = 1'
-            sql = sql + ' %s;' % condition
+                condition = '1 = 1'
+            sql = sql + ' where %s;' % condition
             return sql
         except Exception, e:
             logger.error('generate select sql exception:[%s]' % str(e))
@@ -105,6 +111,42 @@ class MysqlWrapper(object):
             logger.error('generate insert sql exception:[%s]' % str(e))
             return None
 
+    def gen_update_sql(self, table, new_cond_map, old_cond_map):
+        try:
+            sql = 'update %s' % table
+            # set new value
+            new_values = ''
+            for key, value in new_cond_map.items():
+                new_values += '`%s` = \'%s\',' % (key, value)
+            sql += 'set ' + new_values.strip(',')
+            # set condition
+            condition = ''
+            for key, value in old_cond_map.items():
+                condition += '`%s` = \'%s\' and' % (key, value)
+            if condition.endswith(' and'):
+                condition = condition[:-4]
+            if condition != '':
+                sql += 'where %s;' % condition
+            return sql
+        except Exception, e:
+            logger.error('generate update sql exception:[%s]' % str(e))
+            return None
+
+    def gen_delete_sql(self, table, cond_map):
+        try:
+            sql = 'delete from %s' % table
+            condition = ''
+            for key, value in old_cond_map.items():
+                condition += '`%s` = \'%s\' and' % (key, value)
+            if condition.endswith(' and'):
+                condition = condition[:-4]
+            if condition != '':
+                sql += 'where %s;' % condition
+            return sql
+        except Exception, e:
+            logger.error('generate delete sql exception:[%s]' % str(e))
+            return None
+
     def select(self, table, cond_map, fields = '*'):
         '''
         select table fields
@@ -120,17 +162,19 @@ class MysqlWrapper(object):
         return success:results
                fail: None
         '''
-        logger.info('start to select mysql table ...')
         try:
+            if len(cond_map) == 0:
+                logger.error('[select] condition map is empty')
+                return list()
             sql = self.gen_select_sql(table, cond_map, fields)
             if sql is None:
-                return None
+                return list()
             self._execute_sql_(sql)
             results = self.cursor.fetchall()
-            return results
+            return [results]
         except Exception, e:
             logger.error('[select] sql:[%s] exception:[%s]' % (sql, str(e)))
-        logger.info('success to select mysql table')
+            return list()
 
     def insert(self, table, cond_map):
         '''
@@ -145,16 +189,73 @@ class MysqlWrapper(object):
         return success:True
                fail: False
         '''
-        logger.info('start to insert mysql table ...')
         try:
+            if len(cond_map) == 0:
+                logger.error('[insert] condition map is empty')
+                return False
             sql = self.gen_insert_sql(table, cond_map, fields)
             if sql is None:
-                return None
+                return False
             self._execute_sql_(sql)
             self.connect.commit()
             return True
         except Exception, e:
             logger.error('[insert] sql:[%s] exception:[%s]' % (sql, str(e)))
+            self._rollback()
+            return False
+
+    def update(self, table, new_cond_map, old_cond_map):
+        '''
+        update table row
+
+        @table: mysql table name
+        @new_cond_map = {
+            'key': value,
+            ...
+        }
+        @old_cond_map = {
+            'key': value,
+            ...
+        }
+
+        return success:True
+               fail: False
+        '''
+        try:
+            if len(new_cond_map) == 0:
+                logger.error('[update] new condition map is empty')
+                return False
+            sql = self.gen_update_sql(table, new_cond_map, old_cond_map)
+            self._execute_sql_(sql)
+            self.connect.commit()
+            return True
+        except Exception, e:
+            logger.error('[update] sql:[%s] exception:[%s]' % (sql, str(e)))
+            self._rollback()
+            return False
+
+    def delete(self, table, cond_map):
+        '''
+        delete table row
+
+        @table: mysql table name
+        @cond_map = {
+            'key': value,
+            ...
+        }
+
+        return success:True
+               fail: False
+        '''
+        try:
+            if len(cond_map) == 0:
+                logger.error('[delete] condition map is empty')
+                return False
+            sql = self.gen_delete_sql(table, cond_map)
+            self._execute_sql_(sql)
+            self.connect.commit()
+            return True
+        except Exception, e:
+            logger.error('[delete] sql:[%s] exception:[%s]' % (sql, str(e)))
             self.connect.rollback()
             return False
-        logger.info('success to insert mysql table')

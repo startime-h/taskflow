@@ -6,7 +6,6 @@ import sys
 import logging
 import sys_path
 
-print sys.path
 from common import logging_config
 from common import config_parser
 import table_struct
@@ -31,13 +30,16 @@ def select_user_info(user_id, user_name = '', user_email = ''):
         table_struct.UserInfo.UserId : user_id
     }
     if user_name not in ['', None]:
-        cond_map[table_struct.UserInfo.UserName] = table_struct.UserInfo.UserId = user_name
+        cond_map[table_struct.UserInfo.UserName] = user_name
     if user_email not in ['', None]:
-        cond_map[table_struct.UserInfo.UserEmail] = table_struct.UserInfo.UserId = user_email
+        cond_map[table_struct.UserInfo.UserEmail] = user_email
     # do select
     mysql = mysql_wrapper.MysqlWrapper()
     rows = mysql.select(table, cond_map)
-    print rows
+    if len(rows) == 0:
+        logger.error('Select user info get empty rows')
+        return list()
+    return rows
 
 def add_user_info(user_id, user_name = '', user_email = ''):
     '''
@@ -54,6 +56,6 @@ def add_user_info(user_id, user_name = '', user_email = ''):
     pass
 
 if __name__ == '__main__':
-    select_user_info(1)
-    select_user_info(1, 'cgl')
-    select_user_info(1, 'cgl@gmail.com')
+    print select_user_info(1)
+    print select_user_info(1, 'cgl')
+    print select_user_info(1, 'cgl@gmail.com')
