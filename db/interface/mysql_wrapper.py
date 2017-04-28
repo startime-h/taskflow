@@ -6,6 +6,7 @@ import sys
 import time
 import logging
 import MySQLdb
+import MySQLdb.cursors
 
 from common import logging_config
 from common import config_parser
@@ -57,7 +58,8 @@ class MysqlWrapper(object):
         if db_config.get_section_key('mysql', 'charset'):
             charset = db_config.get_section_key('mysql', 'charset')
 
-        return MySQLdb.connect(host=host, port=int(port), user=user, passwd=password, db=db, charset=charset)
+        return MySQLdb.connect(host=host, port=int(port), user=user, passwd=password, db=db, \
+                charset=charset, cursorclass = MySQLdb.cursors.DictCursor)
 
     def _execute_sql_(self, sql):
         """
@@ -97,12 +99,12 @@ class MysqlWrapper(object):
 
     def gen_insert_sql(self, table, cond_map):
         try:
-            sql = 'insert into %s' % (fields, table)
+            sql = 'insert into %s' % table
             colums = ''
             values = ''
             for key, value in cond_map.items():
                 colums += '`%s`,' % key
-                valus += '\'%s\',' % value
+                values += '\'%s\',' % value
             colums = '(' + colums.strip(',') + ')'
             values = '(' + values.strip(',') + ')'
             sql = sql + ' %s VALUES %s;' % (colums, values)
@@ -113,7 +115,7 @@ class MysqlWrapper(object):
 
     def gen_update_sql(self, table, new_cond_map, old_cond_map):
         try:
-            sql = 'update %s' % table
+            sql = 'update %s ' % table
             # set new value
             new_values = ''
             for key, value in new_cond_map.items():
@@ -134,9 +136,9 @@ class MysqlWrapper(object):
 
     def gen_delete_sql(self, table, cond_map):
         try:
-            sql = 'delete from %s' % table
+            sql = 'delete from %s ' % table
             condition = ''
-            for key, value in old_cond_map.items():
+            for key, value in cond_map.items():
                 condition += '`%s` = \'%s\' and' % (key, value)
             if condition.endswith(' and'):
                 condition = condition[:-4]
@@ -170,10 +172,12 @@ class MysqlWrapper(object):
             if sql is None:
                 return list()
             self._execute_sql_(sql)
-            results = self.cursor.fetchall()
-            return [results]
+            results = list()
+            for res in self.cursor.fetchall():
+                results.append(res)
+            return results
         except Exception, e:
-            logger.error('[select] sql:[%s] exception:[%s]' % (sql, str(e)))
+            logger.error('[select] sql exception:[%s]' % (str(e)))
             return list()
 
     def insert(self, table, cond_map):
@@ -193,14 +197,14 @@ class MysqlWrapper(object):
             if len(cond_map) == 0:
                 logger.error('[insert] condition map is empty')
                 return False
-            sql = self.gen_insert_sql(table, cond_map, fields)
+            sql = self.gen_insert_sql(table, cond_map)
             if sql is None:
                 return False
             self._execute_sql_(sql)
             self.connect.commit()
             return True
         except Exception, e:
-            logger.error('[insert] sql:[%s] exception:[%s]' % (sql, str(e)))
+            logger.error('[insert] sql exception:[%s]' % (str(e)))
             self._rollback()
             return False
 
@@ -230,7 +234,7 @@ class MysqlWrapper(object):
             self.connect.commit()
             return True
         except Exception, e:
-            logger.error('[update] sql:[%s] exception:[%s]' % (sql, str(e)))
+            logger.error('[update] sql exception:[%s]' % (str(e)))
             self._rollback()
             return False
 
@@ -256,6 +260,6 @@ class MysqlWrapper(object):
             self.connect.commit()
             return True
         except Exception, e:
-            logger.error('[delete] sql:[%s] exception:[%s]' % (sql, str(e)))
+            logger.error('[delete] sql exception:[%s]' % (str(e)))
             self.connect.rollback()
             return False
