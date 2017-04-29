@@ -11,7 +11,7 @@ from common import config_parser
 import table_struct
 import mysql_wrapper
 
-logger = logging_config.commonLogger()
+logger = logging_config.dbLogger()
 logger.setLevel(logging.INFO)
 
 def select_dag_run_history(cond_map, fields = '*'):

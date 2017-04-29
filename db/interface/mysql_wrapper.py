@@ -12,7 +12,7 @@ from common import logging_config
 from common import config_parser
 import sys_path
 
-logger = logging_config.commonLogger()
+logger = logging_config.dbLogger()
 logger.setLevel(logging.INFO)
 
 DB_CONF_PATH = sys_path.__grandfather_dir__+ '/conf/db.cfg'
