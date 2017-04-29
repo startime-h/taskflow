@@ -65,21 +65,14 @@ class MysqlWrapper(object):
         """
         Exceute sql
         @sql: sql
-
         """
-        try:
-            self.cursor.execute(sql)
-        except Exception, e:
-            logger.error('exceute sql:[%s] exception:[%s]' % (sql, str(e)))
+        self.cursor.execute(sql)
 
     def _rollback(self):
         """
         rollbock sql
         """
-        try:
-            self.connect.rollback()
-        except Exception, e:
-            logger.error('rollback exception:[%s]' % str(e))
+        self.connect.rollback()
 
     def gen_select_sql(self, table, cond_map, fields):
         try:
@@ -128,7 +121,7 @@ class MysqlWrapper(object):
             if condition.endswith(' and'):
                 condition = condition[:-4]
             if condition != '':
-                sql += 'where %s;' % condition
+                sql += ' where %s;' % condition
             return sql
         except Exception, e:
             logger.error('generate update sql exception:[%s]' % str(e))
@@ -143,7 +136,7 @@ class MysqlWrapper(object):
             if condition.endswith(' and'):
                 condition = condition[:-4]
             if condition != '':
-                sql += 'where %s;' % condition
+                sql += ' where %s;' % condition
             return sql
         except Exception, e:
             logger.error('generate delete sql exception:[%s]' % str(e))
