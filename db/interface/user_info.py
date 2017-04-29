@@ -99,7 +99,7 @@ def update_user_info(row_id, new_user_id, new_user_name, new_user_email):
 
 def delete_user_info(cond_map):
     '''
-    udpate user info record
+    delete user info record
 
     @cond_map = {
         user_id: xxx
