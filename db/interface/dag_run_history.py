@@ -14,6 +14,21 @@ import mysql_wrapper
 logger = logging_config.dbLogger()
 logger.setLevel(logging.INFO)
 
+def select_all_dag_run_history():
+    '''
+    Select all dag run history record
+
+    return rows/list()
+    '''
+    table = table_struct.T_DAG_RUN_HISTORY
+    condition_str = '1=1'
+    mysql = mysql_wrapper.MysqlWrapper()
+    rows = mysql.select_with_condition(table, condition_str)
+    if len(rows) == 0:
+        logger.error('Select all dag run history get empty rows')
+        return list()
+    return rows
+
 def select_dag_run_history(cond_map, fields = '*'):
     '''
     With by condition map select dag run history record
@@ -108,4 +123,6 @@ def delete_dag_run_history(cond_map):
     return True
 
 if __name__ == '__main__':
+    rows = select_all_dag_run_history()
+    for row in rows: print row
     pass

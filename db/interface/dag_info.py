@@ -14,6 +14,21 @@ import mysql_wrapper
 logger = logging_config.dbLogger()
 logger.setLevel(logging.INFO)
 
+def select_all_dag_info():
+    '''
+    Select all dag info record
+
+    return rows/list()
+    '''
+    table = table_struct.T_DAG_INFO
+    condition_str = '1=1'
+    mysql = mysql_wrapper.MysqlWrapper()
+    rows = mysql.select_with_condition(table, condition_str)
+    if len(rows) == 0:
+        logger.error('Select all dag info get empty rows')
+        return list()
+    return rows
+
 def select_dag_info(cond_map, fields = '*'):
     '''
     With by condition map select dag info record
@@ -126,4 +141,6 @@ def delete_dag_info(cond_map):
     return True
 
 if __name__ == '__main__':
+    rows = select_all_dag_info()
+    for row in rows: print row
     pass

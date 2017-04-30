@@ -14,6 +14,21 @@ import mysql_wrapper
 logger = logging_config.dbLogger()
 logger.setLevel(logging.INFO)
 
+def select_all_project_info():
+    '''
+    Select all project info record
+
+    return rows/list()
+    '''
+    table = table_struct.T_PROJECT_INFO
+    condition_str = '1=1'
+    mysql = mysql_wrapper.MysqlWrapper()
+    rows = mysql.select_with_condition(table, condition_str)
+    if len(rows) == 0:
+        logger.error('Select all proejct info get empty rows')
+        return list()
+    return rows
+
 def select_project_info(cond_map, fields = '*'):
     '''
     With by condition map select project info record
@@ -103,49 +118,6 @@ def delete_project_info(cond_map):
     return True
 
 if __name__ == '__main__':
-    '''
-    cond_map = {}
-    print select_project_info(cond_map)
-
-    cond_map = {
-            'project_id': 1
-    }
-    print select_project_info(cond_map)
-
-    cond_map = {
-            'project_id': 1
-    }
-    print add_project_info(cond_map)
-    cond_map = {
-            'project_id': 1
-    }
-    print select_project_info(cond_map)
-
-    cond_map = {
-            'project_id': 1,
-            'project_name': 'test',
-            'create_user_id': 1,
-            'create_time': '2017-04-29 10:00:00',
-            'permission_users': '1'
-    }
-    print add_project_info(cond_map)
-    cond_map = {
-            'project_id': 1
-    }
-    print select_project_info(cond_map)
-    old_cond_map = {
-            'project_id': 1
-    }
-    new_cond_map = {
-            'project_id': 100
-    }
-    print update_project_info(new_cond_map, old_cond_map)
-    print select_project_info(old_cond_map)
-    print select_project_info(new_cond_map)
-    cond_map = {
-            'project_id': 100
-    }
-    print delete_project_info(cond_map)
-    print select_project_info(cond_map)
-    '''
+    rows = select_all_project_info()
+    for row in rows: print row
     pass

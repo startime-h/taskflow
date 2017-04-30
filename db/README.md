@@ -41,9 +41,9 @@ CREATE TABLE dag_info  (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expire_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scheduler_interval  INT NOT NULL,    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;skip_failed  INT NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;skip_failed INT NOT NULL default 0,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify_time datetime NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_status  VARCHAR(255) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_status VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_start_time datetime NOT NULL,   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;head_tasks_list VARCHAR(2048) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
@@ -76,7 +76,7 @@ CREATE TABLE task_info (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_command  VARCHAR(2048) NOT NULL,   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_timeout  INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retry_times INT NOT NULL default 1,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_status  VARCHAR(255) NOT NULL default 0,   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_status  VARCHAR(255) NOT NULL,   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pre_task_list  VARCHAR(2048) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_task_list  VARCHAR(2048) NOT NULL,  
@@ -112,7 +112,7 @@ CREATE TABLE dag_run_history (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_id  VARCHAR(255) NOT NULL,      
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end_time datetime NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status  VARCHAR(255) NOT NULL default 3,     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status  VARCHAR(255) NOT NULL,     
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  
 
@@ -128,7 +128,7 @@ CREATE TABLE task_run_history (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end_time datetime NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status VARCHAR(255) NOT NULL default 3,     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status VARCHAR(255) NOT NULL,     
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  
 

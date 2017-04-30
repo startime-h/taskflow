@@ -31,9 +31,9 @@ CREATE TABLE dag_info  (
     create_time datetime NOT NULL,
     expire_time datetime NOT NULL,
     scheduler_interval  INT NOT NULL,  
-    skip_failed  INT NOT NULL,  
+    skip_failed  INT NOT NULL default 0, 
     modify_time datetime NOT NULL,
-    dag_status  INT NOT NULL,  
+    dag_status VARCHAR(255) NOT NULL,  
     next_start_time datetime NOT NULL, 
     head_tasks_list VARCHAR(2048) NOT NULL,
     PRIMARY KEY (id)
@@ -51,7 +51,7 @@ CREATE TABLE task_info (
     run_command  VARCHAR(2048) NOT NULL, 
     run_timeout  INT NOT NULL,   
     retry_times INT NOT NULL default 1,
-    task_status  INT NOT NULL default 0,  
+    task_status VARCHAR(255) NOT NULL,  
     modify_time datetime NOT NULL,
     pre_task_list  VARCHAR(2048) NOT NULL,
     next_task_list  VARCHAR(2048) NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE dag_run_history (
     dag_id  INT NOT NULL,         
     start_time datetime NOT NULL,
     end_time datetime NOT NULL,
-    status  INT NOT NULL default 3,   
+    status  VARCHAR(255) NOT NULL,   
     PRIMARY KEY (id)
 );
 
@@ -82,7 +82,7 @@ CREATE TABLE task_run_history (
     task_id  INT NOT NULL,         
     start_time datetime NOT NULL,
     end_time datetime NOT NULL,
-    status  INT NOT NULL default 3,   
+    status  VARCHAR(255) NOT NULL,   
     PRIMARY KEY (id)
 );
 

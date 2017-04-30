@@ -14,6 +14,22 @@ import mysql_wrapper
 logger = logging_config.dbLogger()
 logger.setLevel(logging.INFO)
 
+def select_all_user_info():
+    '''
+    Select all user info record
+
+    return row: success
+           []: fail
+    '''
+    table = table_struct.T_USER_INFO
+    condition_str = '1=1'
+    mysql = mysql_wrapper.MysqlWrapper()
+    rows = mysql.select_with_condition(table, condition_str)
+    if len(rows) == 0:
+        logger.error('Select user info get empty rows')
+        return list()
+    return rows
+
 def select_user_info(user_id, user_name, user_email):
     '''
     Select user info record
@@ -119,21 +135,6 @@ def delete_user_info(cond_map):
     return True
 
 if __name__ == '__main__':
-    '''
-    print select_user_info(1, 'chenguolin', 'cgl1079743846@gmail.com')
-    print add_user_info(1, 'chenguolin', 'cgl1079743846@gmail.com')
-    print add_user_info(2, 'chenguolin2', 'cgl1079743846@gmail.com')
-    print select_user_info(1, 'chenguolin', 'cgl1079743846@gmail.com')
-    print select_user_info(2, 'chenguolin2', 'cgl1079743846@gmail.com')
-    print update_user_info(1, 20, 'chenguolin2', 'cgl1079743846@gmail.com')
-    print select_user_info(1, 'chenguolin', 'cgl1079743846@gmail.com')
-    print select_user_info(2, 'chenguolin2', 'cgl1079743846@gmail.com')
-    print select_user_info(20, 'chenguolin2', 'cgl1079743846@gmail.com')
-    cond_map = {
-        table_struct.UserInfo.UserName: 'chenguolin2'
-    }
-    print delete_user_info(cond_map)
-    print select_user_info(2, 'chenguolin2', 'cgl1079743846@gmail.com')
-    print select_user_info(20, 'chenguolin2', 'cgl1079743846@gmail.com')
-    '''
+    rows = select_all_user_info()
+    for row in rows: print row
     pass

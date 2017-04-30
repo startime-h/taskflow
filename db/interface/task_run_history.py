@@ -14,6 +14,21 @@ import mysql_wrapper
 logger = logging_config.dbLogger()
 logger.setLevel(logging.INFO)
 
+def select_all_task_run_history():
+    '''
+    Select all task run history record
+
+    return rows/list()
+    '''
+    table = table_struct.T_TASK_RUN_HISTORY
+    condition_str = '1=1'
+    mysql = mysql_wrapper.MysqlWrapper()
+    rows = mysql.select_with_condition(table, condition_str)
+    if len(rows) == 0:
+        logger.error('Select all task run history get empty rows')
+        return list()
+    return rows
+
 def select_task_run_history(cond_map, fields = '*'):
     '''
     With by condition map select task run history record
@@ -108,4 +123,6 @@ def delete_task_run_history(cond_map):
     return True
 
 if __name__ == '__main__':
+    rows = select_all_task_run_history()
+    for row in rows: print row
     pass

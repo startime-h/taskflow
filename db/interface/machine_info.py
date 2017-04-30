@@ -14,6 +14,21 @@ import mysql_wrapper
 logger = logging_config.dbLogger()
 logger.setLevel(logging.INFO)
 
+def select_all_machine_info():
+    '''
+    Select all machine info record
+
+    return rows/list()
+    '''
+    table = table_struct.T_MACHINE_INFO
+    condition_str = '1=1'
+    mysql = mysql_wrapper.MysqlWrapper()
+    rows = mysql.select_with_condition(table, condition_str)
+    if len(rows) == 0:
+        logger.error('Select all machine info get empty rows')
+        return list()
+    return rows
+
 def select_machine_info(machine_name, machine_ip):
     '''
     Select machine info record
@@ -111,4 +126,6 @@ def delete_machine_info(cond_map):
     return True
 
 if __name__ == '__main__':
+    rows = select_all_machine_info()
+    for row in rows: print row
     pass
