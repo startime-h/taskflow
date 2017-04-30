@@ -64,7 +64,7 @@ class DagInfo():
                  Failed
                  Terminated
     @next_start_time: dag next start time
-    @head_tasks_list: dag head tasks list
+    @dag_json: dag json
     '''
 
     ID = 'id'
@@ -80,7 +80,7 @@ class DagInfo():
     ModifyTime = 'modify_time'
     DagStatus = 'dag_status'
     NextStartTime = 'next_start_time'
-    HeadTasksList = 'head_tasks_list'
+    DagJson = 'dag_json'
 
 class TaskInfo():
     '''
@@ -99,8 +99,6 @@ class TaskInfo():
                   Failed
                   Terminated
     @modify_time: task modify time
-    @pre_task_list: task prefix task list
-    @next_task_list: task next task list
     '''
 
     ID = 'id'
@@ -115,8 +113,6 @@ class TaskInfo():
     RetryTimes = 'retry_times'
     TaskStatus = 'task_status'
     ModifyTime = 'modifyTime'
-    PreTaskList = 'pre_task_list'
-    NextTaskList = 'next_task_list'
 
 class MachineInfo():
     '''
@@ -155,6 +151,8 @@ class TaskRunHisgory():
     @status: task status
              Failed
              Terminated
+    @stdout: task stdout
+    @stderr: task stderr
     '''
 
     ID = 'id'
@@ -162,6 +160,8 @@ class TaskRunHisgory():
     StartTime = 'start_time'
     EndTime = 'end_time'
     Status = 'status'
+    Stdout = 'stdout'
+    Stderr = 'stderr'
 
 class TaskPendingQueu():
     '''

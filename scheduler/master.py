@@ -19,18 +19,19 @@ class Master(object):
         default refresh interval equal 60 seconds
         '''
         self.refresh_interval = refresh_interval
+        self.dags = list()
+        self.stop = False
 
-    def run(self):
-        while True:
-            logger.info('Start refresh ...')
-            # to do
-            logger.info('Success refresh ...')
+    def scheduler(self):
+        while not self.stop:
+            for dag in self.dags:
+                pass
             time.sleep(self.refresh_interval)
 
 if __name__ == '__main__':
     try:
         master = Master()
-        master.run()
+        master.scheduler()
     except Exception,e:
         logger.error('Master run exception:[%s]' % str(e))
         sys.exit(2)
