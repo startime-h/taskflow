@@ -68,13 +68,13 @@ class MysqlWrapper(object):
         """
         self.cursor.execute(sql)
 
-    def _rollback(self):
+    def _rollback_(self):
         """
         rollbock sql
         """
         self.connect.rollback()
 
-    def gen_select_sql(self, table, cond_map, fields):
+    def _gen_select_sql_(self, table, cond_map, fields):
         try:
             sql = 'select %s from %s' % (fields, table)
             condition = ''
@@ -90,7 +90,16 @@ class MysqlWrapper(object):
             logger.error('generate select sql exception:[%s]' % str(e))
             return None
 
-    def gen_insert_sql(self, table, cond_map):
+    def _gen_select_sql_with_condition_(self, table, condition_str, fields):
+        try:
+            sql = 'select %s from %s' % (fields, table)
+            sql = sql + ' where %s;' % condition_str
+            return sql
+        except Exception, e:
+            logger.error('generate select sql with condition string exception:[%s]' % str(e))
+            return None
+
+    def _gen_insert_sql_(self, table, cond_map):
         try:
             sql = 'insert into %s' % table
             colums = ''
@@ -106,7 +115,7 @@ class MysqlWrapper(object):
             logger.error('generate insert sql exception:[%s]' % str(e))
             return None
 
-    def gen_update_sql(self, table, new_cond_map, old_cond_map):
+    def _gen_update_sql_(self, table, new_cond_map, old_cond_map):
         try:
             sql = 'update %s ' % table
             # set new value
@@ -127,7 +136,7 @@ class MysqlWrapper(object):
             logger.error('generate update sql exception:[%s]' % str(e))
             return None
 
-    def gen_delete_sql(self, table, cond_map):
+    def _gen_delete_sql_(self, table, cond_map):
         try:
             sql = 'delete from %s ' % table
             condition = ''
@@ -142,26 +151,15 @@ class MysqlWrapper(object):
             logger.error('generate delete sql exception:[%s]' % str(e))
             return None
 
-    def select(self, table, cond_map, fields = '*'):
+    def _select_(self, sql):
         '''
-        select table fields
+        mysql do select action
 
-        @table: mysql table name
-        @cond_map = {
-            'key': value,
-            ...
-        }
-        @fields: select fields, such as 'user_id, user_name'
-                 default '*', select all fields
+        @sql: sql
 
-        return success:results
-               fail: None
+        return list
         '''
         try:
-            if len(cond_map) == 0:
-                logger.error('[select] condition map is empty')
-                return list()
-            sql = self.gen_select_sql(table, cond_map, fields)
             if sql is None:
                 return list()
             self._execute_sql_(sql)
@@ -172,6 +170,98 @@ class MysqlWrapper(object):
         except Exception, e:
             logger.error('[select] sql exception:[%s]' % (str(e)))
             return list()
+
+    def _insert_(self, sql):
+        '''
+        do mysql insert action
+
+        @sql: sql
+
+        return True/False
+        '''
+        try:
+            if sql is None:
+                return False
+            self._execute_sql_(sql)
+            self.connect.commit()
+            return True
+        except Exception, e:
+            logger.error('[insert] sql exception:[%s]' % (str(e)))
+            self._rollback_()
+            return False
+
+    def _update_(self, sql):
+        '''
+        do mysql update action
+
+        @sql: sql
+
+        return True/False
+        '''
+        try:
+            if sql is None:
+                return False
+            self._execute_sql_(sql)
+            self.connect.commit()
+            return True
+        except Exception, e:
+            logger.error('[update] sql exception:[%s]' % (str(e)))
+            self._rollback_()
+            return False
+
+    def _delete_(self, sql):
+        '''
+        do mysql delete action
+
+        @sql: sql
+
+        return True/False
+        '''
+        try:
+            if sql is None:
+                return False
+            self._execute_sql_(sql)
+            self.connect.commit()
+            return True
+        except Exception, e:
+            logger.error('[delete] sql exception:[%s]' % (str(e)))
+            self.connect.rollback()
+            return False
+
+    ################################# public api #################################
+    def select(self, table, cond_map, fields = '*'):
+        '''
+        select table with condition map
+
+        @table: mysql table name
+        @cond_map = {
+            'key': value,
+            ...
+        }
+        @fields: select fields, such as 'user_id, user_name'
+                 default '*', select all fields
+
+        return list()
+        '''
+        if len(cond_map) == 0:
+            logger.error('[select] condition map is empty')
+            return list()
+        sql = self._gen_select_sql_(table, cond_map, fields)
+        return self._select_(sql)
+
+    def select_with_condition(self, table, condition_str, fields = '*'):
+        '''
+        select table with condition string
+
+        @table: mysql table name
+        @condition_str: string condition
+        @fields: select fields, such as 'user_id, user_name'
+                 default '*', select all fields
+
+        return list()
+        '''
+        sql = self._gen_select_sql_with_condition_(table, condition_str, fields)
+        return self._select_(sql)
 
     def insert(self, table, cond_map):
         '''
@@ -186,20 +276,11 @@ class MysqlWrapper(object):
         return success:True
                fail: False
         '''
-        try:
-            if len(cond_map) == 0:
-                logger.error('[insert] condition map is empty')
-                return False
-            sql = self.gen_insert_sql(table, cond_map)
-            if sql is None:
-                return False
-            self._execute_sql_(sql)
-            self.connect.commit()
-            return True
-        except Exception, e:
-            logger.error('[insert] sql exception:[%s]' % (str(e)))
-            self._rollback()
+        if len(cond_map) == 0:
+            logger.error('[insert] condition map is empty')
             return False
+        sql = self._gen_insert_sql_(table, cond_map)
+        return self._insert_(sql)
 
     def update(self, table, new_cond_map, old_cond_map):
         '''
@@ -218,18 +299,11 @@ class MysqlWrapper(object):
         return success:True
                fail: False
         '''
-        try:
-            if len(new_cond_map) == 0:
-                logger.error('[update] new condition map is empty')
-                return False
-            sql = self.gen_update_sql(table, new_cond_map, old_cond_map)
-            self._execute_sql_(sql)
-            self.connect.commit()
-            return True
-        except Exception, e:
-            logger.error('[update] sql exception:[%s]' % (str(e)))
-            self._rollback()
+        if len(new_cond_map) == 0:
+            logger.error('[update] new condition map is empty')
             return False
+        sql = self._gen_update_sql_(table, new_cond_map, old_cond_map)
+        return self._update_(sql)
 
     def delete(self, table, cond_map):
         '''
@@ -244,15 +318,9 @@ class MysqlWrapper(object):
         return success:True
                fail: False
         '''
-        try:
-            if len(cond_map) == 0:
-                logger.error('[delete] condition map is empty')
-                return False
-            sql = self.gen_delete_sql(table, cond_map)
-            self._execute_sql_(sql)
-            self.connect.commit()
-            return True
-        except Exception, e:
-            logger.error('[delete] sql exception:[%s]' % (str(e)))
-            self.connect.rollback()
+        if len(cond_map) == 0:
+            logger.error('[delete] condition map is empty')
             return False
+        sql = self._gen_delete_sql_(table, cond_map)
+        return self._delete_(sql)
+

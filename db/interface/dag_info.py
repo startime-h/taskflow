@@ -36,6 +36,24 @@ def select_dag_info(cond_map, fields = '*'):
         return list()
     return rows
 
+def select_dag_info_with_condition(cond_str, fields = '*'):
+    '''
+    With by condition string select dag info record
+
+    @cond_str: condition string
+    @fields: select fields, default equal *
+
+    return rows/list()
+    '''
+    table = table_struct.T_DAG_INFO
+    # do select
+    mysql = mysql_wrapper.MysqlWrapper()
+    rows = mysql.select_with_condition(table, cond_str, fields)
+    if len(rows) == 0:
+        logger.error('Select dag info get empty rows')
+        return list()
+    return rows
+
 def add_dag_info(cond_map):
     '''
     Add new dag info record

@@ -3,6 +3,7 @@
 
 import os
 import sys
+import time
 import logging
 import sys_path
 
@@ -13,12 +14,18 @@ logger = logging_config.schedulerLogger()
 logger.setLevel(logging.INFO)
 
 class Master(object):
-    def __init__(self):
-        pass
+    def __init__(self, refresh_interval=60):
+        '''
+        default refresh interval equal 60 seconds
+        '''
+        self.refresh_interval = refresh_interval
 
     def run(self):
         while True:
-            pass
+            logger.info('Start refresh ...')
+            # to do
+            logger.info('Success refresh ...')
+            time.sleep(self.refresh_interval)
 
 if __name__ == '__main__':
     try:
