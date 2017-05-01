@@ -18,7 +18,9 @@ def do_setup():
         ],
         install_requires=[
             'configparser>=3.5.0, <3.6.0',
-            'MySQL-python'
+            'MySQL-python',
+            'flask==0.9',
+            'flask-login==0.2.6'
         ],
         author='chenguolin',
         author_email='cgl@1079743846@gmail.com'

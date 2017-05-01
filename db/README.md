@@ -45,7 +45,7 @@ CREATE TABLE dag_info  (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_status VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_start_time datetime NOT NULL,   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;head_tasks_list VARCHAR(2048) NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_json VARCHAR(2048) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  
 
@@ -62,7 +62,7 @@ skip_failed: 是否跳过failed节点 定期调度
 modify_time: dag更新时间  
 dag_status: dag状态  Not Running／Running／Failed／Terminted  
 next_start_time: 下一次启动时间  
-head_tasks_list: dag 头节点列表  
+dag_json: dag json描述
 
 ## task_info  
 CREATE TABLE task_info (  
@@ -78,8 +78,6 @@ CREATE TABLE task_info (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retry_times INT NOT NULL default 1,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_status  VARCHAR(255) NOT NULL,   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify_time datetime NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pre_task_list  VARCHAR(2048) NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_task_list  VARCHAR(2048) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  
 
@@ -92,7 +90,8 @@ run_user: 运行用户，root还是一般用户
 run_command: 运行命令  
 run_timeout: 运行超时时间  
 retry_times: 重试次数  
-task_status:  task 状态  Not Running／Running／Failed／Terminted
+task_status: task 状态  Not Running／Running／Failed／Terminted
+modiry_time: task 更新时间
 
 ## machine_info  
 CREATE TABLE machine_info (  

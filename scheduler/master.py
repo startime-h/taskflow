@@ -5,28 +5,47 @@ import os
 import sys
 import time
 import logging
+import threading
 import sys_path
 
 from common import logging_config
 from common import config_parser
+from db.interface import dag_info
+
+from dag import Dag
 
 logger = logging_config.schedulerLogger()
 logger.setLevel(logging.INFO)
 
-class Master(object):
-    def __init__(self, refresh_interval=60):
+class Master():
+    def __init__(self, refresh_interval=5):
         '''
-        default refresh interval equal 60 seconds
+        default refresh interval equal 5 seconds
         '''
         self.refresh_interval = refresh_interval
         self.dags = list()
-        self.stop = False
+
+    def _current_datetime_(self, format='%Y-%m-%d %H:%M:%S'):
+        return time.strftime(format)
+
+    def _refresh_once_(self):
+        #check all need start dag
+        current_time = self._current_datetime_()
+        self.dags = dag_info.select_need_start_dag(current_time)
 
     def scheduler(self):
-        while not self.stop:
-            for dag in self.dags:
-                pass
+        while True:
+            for dag_row in self.dags:
+                succ = dag_info.update_dag_status_and_starttime(dag_row)
+                if not succ:
+                    continue
+                dag = Dag(dag_row)
+                dag.daemon = True
+                dag.start()
+            logger.info('Start refresh once')
             time.sleep(self.refresh_interval)
+            self._refresh_once_()
+            logger.info('Success refresh once')
 
 if __name__ == '__main__':
     try:
