@@ -1,4 +1,4 @@
-## user info
+## 1.user info
 CREATE TABLE user_info (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_id INT NOT NULL,  
@@ -12,7 +12,7 @@ user_id: 用户id，类似工号，不重复
 user_name: 用户名称  
 user_email: 用户邮箱  
 
-## project_info  
+## 2.project_info  
 CREATE TABLE project_info (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_id INT NOT NULL,  
@@ -30,7 +30,7 @@ create_uesr_id: 创建用户id
 create_time: 创建时间  
 permission_users: 有权限用户列表  
 
-## dag_info  
+## 3.dag_info  
 CREATE TABLE dag_info  (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_id  INT NOT NULL,  
@@ -64,7 +64,7 @@ dag_status: dag状态  Not Running／Running／Failed／Terminted
 next_start_time: 下一次启动时间  
 dag_json: dag json描述
 
-## task_info  
+## 4.task_info  
 CREATE TABLE task_info (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_id INT NOT NULL,  
@@ -93,7 +93,7 @@ retry_times: 重试次数
 task_status: task 状态  Not Running／Running／Failed／Terminted
 modiry_time: task 更新时间
 
-## machine_info  
+## 5.machine_info  
 CREATE TABLE machine_info (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_name VARCHAR(255) NOT NULL,  
@@ -105,7 +105,7 @@ id: 主键id
 machine_name: 机器名称  
 machine_ip: 机器ip地址  
 
-## dag_run_history  
+## 6.dag_run_history  
 CREATE TABLE dag_run_history (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_id  VARCHAR(255) NOT NULL,      
@@ -121,7 +121,7 @@ start_time：dag 启动时间
 end_time：dag 结束时间  
 status：dag 状态  Failed／Terminted  
 
-## task_run_history  
+## 7.task_run_history  
 CREATE TABLE task_run_history (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_id INT NOT NULL,  
@@ -137,10 +137,10 @@ start_time：启动时间
 end_time：结束时间  
 status：task 状态, Failed／Terminted
 
-## task_pending_queue
+## 8.task_pending_queue
 CREATE TABLE task_pending_queue (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task_id INT NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_ip VARCHAR(255) NOT NULL
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;machine_ip VARCHAR(255) NOT NULL  
 );  
 
 id：task id，自增  
