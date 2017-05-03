@@ -98,16 +98,16 @@ def add_dag_info(cond_map):
         return False
     return True
 
-def update_dag_info(new_cond_map, old_cond_map):
+def update_dag_info(new_value_map, cond_map):
     '''
     update dag info record
 
-    @new_cond_map = {
+    @new_value_map = {
         'dag_id': ...
         'dag_name': ...
         ...
     }
-    @old_cond_map = {
+    @cond_map = {
         'dag_id': ...
         'dag_name': ...
         ...
@@ -117,7 +117,7 @@ def update_dag_info(new_cond_map, old_cond_map):
     '''
     table = table_struct.T_DAG_INFO
     mysql = mysql_wrapper.MysqlWrapper()
-    succ = mysql.update(table, new_cond_map, old_cond_map)
+    succ = mysql.update(table, new_value_map, cond_map)
     if succ is False:
         logger.error('Update dag info fail.')
         return False
@@ -162,7 +162,7 @@ def select_need_start_dag(current_time):
             )
     return select_dag_info_with_condition(condition_str)
 
-def update_dag_status_and_starttime(cond_map):
+def update_dag_status_and_starttime(new_value_map):
     '''
     update dag status and next start time
 
@@ -172,34 +172,35 @@ def update_dag_status_and_starttime(cond_map):
 
     return True/False
     '''
-    old_cond_map = {
-        table_struct.DagInfo.ID: cond_map[table_struct.DagInfo.ID]
+    cond_map = {
+        table_struct.DagInfo.ID: new_value_map[table_struct.DagInfo.ID]
     }
     # udpate status
-    cond_map[table_struct.DagInfo.DagStatus] = status.DAG_RUNNING
+    new_value_map[table_struct.DagInfo.DagStatus] = status.DAG_RUNNING
     # udpate next starttime
-    scheduler_interval = cond_map[table_struct.DagInfo.SchedulerInterval]
+    scheduler_interval = new_value_map[table_struct.DagInfo.SchedulerInterval]
     next_starttime = int(time.time()) + scheduler_interval
     next_starttime = datetime.datetime.fromtimestamp(next_starttime).strftime('%Y-%m-%d %H:%M:%S')
-    cond_map[table_struct.DagInfo.NextStartTime] = next_starttime
+    new_value_map[table_struct.DagInfo.NextStartTime] = next_starttime
     # do update
-    return update_dag_info(cond_map, old_cond_map)
+    return update_dag_info(new_value_map, cond_map)
 
-def update_dag_terminated_status(row_id):
+def update_dag_status(row_id, new_status):
     '''
     update dag status to terminated
 
     @row_id: record id
+    @new_status: new DAG status
 
     return True/False
     '''
-    old_cond_map = {
+    cond_map = {
         table_struct.DagInfo.ID: row_id
     }
-    new_cond_map = {
-        table_struct.DagInfo.DagStatus: status.DAG_TERMINATED
+    new_value_map = {
+        table_struct.DagInfo.DagStatus: new_status
     }
-    return update_dag_info(new_cond_map, old_cond_map)
+    return update_dag_info(new_value_map, cond_map)
 
 if __name__ == '__main__':
     rows = select_all_dag_info()

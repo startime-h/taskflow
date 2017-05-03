@@ -79,15 +79,15 @@ def add_machine_info(machine_name, machine_ip):
         return False
     return True
 
-def update_machine_info(new_cond_map, old_cond_map):
+def update_machine_info(new_value_map, cond_map):
     '''
     udpate machine info record
 
-    @new_cond_map = {
+    @new_value_map = {
         'machine_name': ...
         'machine_ip': ...
     }
-    @old_cond_map = {
+    @cond_map = {
         'machine_name': ...
         'machine_ip': ...
     }
@@ -98,7 +98,7 @@ def update_machine_info(new_cond_map, old_cond_map):
     # do update record
     table = table_struct.T_MACHINE_INFO
     mysql = mysql_wrapper.MysqlWrapper()
-    succ = mysql.update(table, new_cond_map, old_cond_map)
+    succ = mysql.update(table, new_value_map, cond_map)
     if succ is False:
         logger.error('Update machine info fail.')
         return False

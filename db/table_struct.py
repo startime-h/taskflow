@@ -163,7 +163,7 @@ class TaskRunHisgory():
     Stdout = 'stdout'
     Stderr = 'stderr'
 
-class TaskPendingQueu():
+class TaskPendingQueue():
     '''
     @task_id: task id
     @machine_ip: machine ip, machine group

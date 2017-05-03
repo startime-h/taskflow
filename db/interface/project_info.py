@@ -75,15 +75,15 @@ def add_project_info(cond_map):
         return False
     return True
 
-def update_project_info(new_cond_map, old_cond_map):
+def update_project_info(new_value_map, cond_map):
     '''
     update project info record
 
-    @new_cond_map = {
+    @new_value_map = {
         'project_id': ...
         ...
     }
-    @old_cond_map = {
+    @cond_map = {
         'project_id': ...
         ...
     }
@@ -92,7 +92,7 @@ def update_project_info(new_cond_map, old_cond_map):
     '''
     table = table_struct.T_PROJECT_INFO
     mysql = mysql_wrapper.MysqlWrapper()
-    succ = mysql.update(table, new_cond_map, old_cond_map)
+    succ = mysql.update(table, new_value_map, cond_map)
     if succ is False:
         logger.error('Update project info fail.')
         return False

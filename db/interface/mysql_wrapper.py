@@ -22,7 +22,7 @@ class MysqlWrapper(object):
         self.db_config = config_parser.Config(DB_CONF_PATH)
         if not self._valid_config_(self.db_config):
             logger.error('Invalid db config')
-            sys.exit(2)
+            raise Exception("Invalid db config")
         self.connect = self._db_connect_(self.db_config)
         self.cursor = self.connect.cursor()
 
@@ -115,17 +115,17 @@ class MysqlWrapper(object):
             logger.error('generate insert sql exception:[%s]' % str(e))
             return None
 
-    def _gen_update_sql_(self, table, new_cond_map, old_cond_map):
+    def _gen_update_sql_(self, table, new_value_map, cond_map):
         try:
             sql = 'update %s ' % table
             # set new value
             new_values = ''
-            for key, value in new_cond_map.items():
+            for key, value in new_value_map.items():
                 new_values += '`%s` = \'%s\',' % (key, value)
             sql += 'set ' + new_values.strip(',')
             # set condition
             condition = ''
-            for key, value in old_cond_map.items():
+            for key, value in cond_map.items():
                 condition += '`%s` = \'%s\' and' % (key, value)
             if condition.endswith(' and'):
                 condition = condition[:-4]
@@ -282,16 +282,16 @@ class MysqlWrapper(object):
         sql = self._gen_insert_sql_(table, cond_map)
         return self._insert_(sql)
 
-    def update(self, table, new_cond_map, old_cond_map):
+    def update(self, table, new_value_map, cond_map):
         '''
         update table row
 
         @table: mysql table name
-        @new_cond_map = {
+        @new_value_map = {
             'key': value,
             ...
         }
-        @old_cond_map = {
+        @cond_map = {
             'key': value,
             ...
         }
@@ -299,10 +299,10 @@ class MysqlWrapper(object):
         return success:True
                fail: False
         '''
-        if len(new_cond_map) == 0:
+        if len(new_value_map) == 0:
             logger.error('[update] new condition map is empty')
             return False
-        sql = self._gen_update_sql_(table, new_cond_map, old_cond_map)
+        sql = self._gen_update_sql_(table, new_value_map, cond_map)
         return self._update_(sql)
 
     def delete(self, table, cond_map):

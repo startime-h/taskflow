@@ -77,16 +77,16 @@ def add_dag_run_history(cond_map):
         return False
     return True
 
-def update_dag_run_history(new_cond_map, old_cond_map):
+def update_dag_run_history(new_value_map, cond_map):
     '''
     update dag run history record
 
-    @new_cond_map = {
+    @new_value_map = {
         'dag_id': ...
         'dag_name': ...
         ...
     }
-    @old_cond_map = {
+    @cond_map = {
         'dag_id': ...
         'dag_name': ...
         ...
@@ -96,7 +96,7 @@ def update_dag_run_history(new_cond_map, old_cond_map):
     '''
     table = table_struct.T_DAG_RUN_HISTORY
     mysql = mysql_wrapper.MysqlWrapper()
-    succ = mysql.update(table, new_cond_map, old_cond_map)
+    succ = mysql.update(table, new_value_map, cond_map)
     if succ is False:
         logger.error('Update dag run history fail.')
         return False

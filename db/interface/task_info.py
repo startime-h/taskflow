@@ -97,16 +97,16 @@ def add_task_info(cond_map):
         return False
     return True
 
-def update_task_info(new_cond_map, old_cond_map):
+def update_task_info(new_value_map, cond_map):
     '''
     update task info record
 
-    @new_cond_map = {
+    @new_value_map = {
         'task_id': ...
         'task_name': ...
         ...
     }
-    @old_cond_map = {
+    @cond_map = {
         'task_id': ...
         'task_name': ...
         ...
@@ -116,7 +116,7 @@ def update_task_info(new_cond_map, old_cond_map):
     '''
     table = table_struct.T_TASK_INFO
     mysql = mysql_wrapper.MysqlWrapper()
-    succ = mysql.update(table, new_cond_map, old_cond_map)
+    succ = mysql.update(table, new_value_map, cond_map)
     if succ is False:
         logger.error('Update task info fail.')
         return False
@@ -142,7 +142,7 @@ def delete_task_info(cond_map):
         return False
     return True
 
-def select_dag_running_task(self, dag_id):
+def select_dag_running_task(dag_id):
     '''
     select dag all running task
 
@@ -158,8 +158,44 @@ def select_dag_running_task(self, dag_id):
     }
     rows = mysql.select(table, cond_map, fields)
     if len(rows) == 0:
+        logger.error('dag:[%d] select running tasks get empty.' % dag_id)
         return list()
     return rows
+
+def update_dag_all_tasks_status(dag_id, new_status):
+    '''
+    update dag all task status
+
+    @dag_id: dag id
+    @new_status: new task status
+
+    return True/False
+    '''
+    cond_map = {
+        table_struct.TaskInfo.DagId: dag_id
+    }
+    new_value_map = {
+        table_struct.TaskInfo.TaskStatus: new_status
+    }
+    return update_task_info(new_value_map, cond_map)
+
+def get_task_run_machine(task_id):
+    '''
+    select task run machine ip address
+
+    @task_id: task id
+
+    return machine_ip/None
+    '''
+    cond_map = {
+        table_struct.TaskInfo.TaskId: task_id
+    }
+    rows = select_task_info(cond_map)
+    if len(rows) == 0:
+        logger.error('task:[%d] not found in mysql.' % task_id)
+        return None
+    row = rows[0]
+    return row[table_struct.TaskInfo.RunMachine]
 
 if __name__ == '__main__':
     rows = select_all_task_info()

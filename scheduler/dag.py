@@ -15,6 +15,7 @@ from common import config_parser
 from db import table_struct
 from db.interface import dag_info
 from db.interface import task_info
+from db.interface import task_pending_queue
 
 logger = logging_config.schedulerLogger()
 logger.setLevel(logging.INFO)
@@ -31,6 +32,7 @@ class Dag(threading.Thread):
         self.dag_json = dag_row[table_struct.DagInfo.DagJson]
         # init
         self.stop = False
+        self.terminated = False
         self.running_tasks = list()
         self._init_dag_json_()
 
@@ -56,6 +58,13 @@ class Dag(threading.Thread):
             # set out
             self.task_map[task_id]['out'] += len(next_task_list)
 
+    def _reset_dag_all_tasks_(self):
+        retry_times = self.retry_times
+        while retry_times:
+            succ = task_info.update_dag_all_tasks_status(self.dag_id, status.TASK_NOT_RUNNING)
+            if succ: break
+            retry_times -= 1
+
     def _get_in_tasks_(self):
         # get in tasks
         in_tasks = list()
@@ -73,9 +82,22 @@ class Dag(threading.Thread):
         self._calc_in_out_degree_()
         return in_tasks
 
+    def _add_pending_tasks_(self):
+        for task_id in self.running_tasks:
+            machine_ip = task_info.get_task_run_machine(task_id)
+            if machine_ip is None:
+                logger.error('Select task:[%d] run machine fail.' % task_id)
+                self.stop = True
+            # add to task_pending_queue
+            succ = task_pending_queue.add_pending_task(task_id, machine_ip)
+            if not succ:
+                logger.error('Add pending task:[%d] fail.' % task_id)
+                self.stop = True
+
     def _check_once_(self):
         if len(self.dag_json.keys()) == 0 and len(self.running_tasks) == 0:
             self.stop = True
+            self.terminated = True
             return
         # check running tasks
         terminated_tasks = list()
@@ -91,19 +113,23 @@ class Dag(threading.Thread):
             self.running_tasks.remove(task_id)
 
     def _update_dag_status_(self):
+        new_status = status.DAG_TERMINATED
+        if not self.terminated:
+            new_status = status.DAG_FAILED
         retry_times = self.retry_times
         while retry_times:
-            succ = dag_info.update_dag_terminated_status(self.dag_id)
+            succ = dag_info.update_dag_status(self.dag_id, new_status)
             if succ: break
             retry_times -= 1
 
     def run(self):
         logger.info('Start run dag:[%s]' % self.dag_name)
+        # reset dag all task status: NotRunning
+        self._reset_dag_all_tasks_()
         while not self.stop:
             if len(self.running_tasks) == 0:
                 self.running_tasks = self._get_in_tasks_()
-                # push tasks to running
-                pass
+                self._add_pending_tasks_()
             time.sleep(self.interval)
             self._check_once_()
         # set dag status to Terminated

@@ -98,16 +98,16 @@ def update_user_info(row_id, new_user_id, new_user_name, new_user_email):
     '''
     # do update record
     table = table_struct.T_USER_INFO
-    new_cond_map = {
+    new_value_map = {
         table_struct.UserInfo.UserId: new_user_id,
         table_struct.UserInfo.UserName: new_user_name,
         table_struct.UserInfo.UserEmail: new_user_email
     }
-    old_cond_map = {
+    cond_map = {
         table_struct.UserInfo.ID: row_id
     }
     mysql = mysql_wrapper.MysqlWrapper()
-    succ = mysql.update(table, new_cond_map, old_cond_map)
+    succ = mysql.update(table, new_value_map, cond_map)
     if succ is False:
         logger.error('Update user info fail.')
         return False

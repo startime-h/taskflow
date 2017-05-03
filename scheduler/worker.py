@@ -5,42 +5,37 @@ import os
 import sys
 import time
 import logging
-import threading
 import sys_path
 
 from common import logging_config
 from common import config_parser
-from db.interface import dag_info
-
-from dag import Dag
+from common import env_util
+from db.interface import task_pending_queue
 
 logger = logging_config.schedulerLogger()
 logger.setLevel(logging.INFO)
 
-class Master():
+class Worker(object):
     def __init__(self, refresh_interval=5):
         '''
         default refresh interval equal 5 seconds
         '''
         self.refresh_interval = refresh_interval
-        self.dags = list()
+        self.tasks = list()
+        self._get_worker_ip_()
 
-    def _current_datetime_(self, format='%Y-%m-%d %H:%M:%S'):
-        return time.strftime(format)
+    def _get_worker_ip_(self):
+        self.worker_ip = env_util.get_hostip()
+        if self.worker_ip is None:
+            raise Exception("Current worker get ip address fail.")
 
     def _refresh_once_(self):
-        current_time = self._current_datetime_()
-        self.dags = dag_info.select_need_start_dag(current_time)
+        self.tasks = task_pending_queue.select_pending_tasks(self.worker_ip)
 
     def scheduler(self):
         while True:
-            for dag_row in self.dags:
-                succ = dag_info.update_dag_status_and_starttime(dag_row)
-                if not succ:
-                    continue
-                dag = Dag(dag_row)
-                dag.daemon = True
-                dag.start()
+            for task_id in self.tasks:
+                print task_id
             logger.info('Start refresh once')
             time.sleep(self.refresh_interval)
             self._refresh_once_()
@@ -48,8 +43,8 @@ class Master():
 
 if __name__ == '__main__':
     try:
-        master = Master()
-        master.scheduler()
+        worker = Worker()
+        worker.scheduler()
     except Exception,e:
-        logger.error('Master run exception:[%s]' % str(e))
+        logger.error('Worker run exception:[%s]' % str(e))
         sys.exit(2)
