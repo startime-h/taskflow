@@ -12,6 +12,8 @@ from common import config_parser
 from common import env_util
 from db.interface import task_pending_queue
 
+from task import Task
+
 logger = logging_config.schedulerLogger()
 logger.setLevel(logging.INFO)
 
@@ -25,17 +27,21 @@ class Worker(object):
         self._get_worker_ip_()
 
     def _get_worker_ip_(self):
-        self.worker_ip = env_util.get_hostip()
-        if self.worker_ip is None:
-            raise Exception("Current worker get ip address fail.")
+        succ, out = env_util.get_hostip()
+        if succ is False:
+            raise Exception("Current worker get ip address fail. error:[%s]" % out)
+        self.worker_ip = out
 
     def _refresh_once_(self):
         self.tasks = task_pending_queue.select_pending_tasks(self.worker_ip)
 
     def scheduler(self):
+        self._refresh_once_()
         while True:
-            for task_id in self.tasks:
-                print task_id
+            for simple_task_info in self.tasks:
+                task = Task(simple_task_info)
+                task.daemon = True
+                task.start()
             logger.info('Start refresh once')
             time.sleep(self.refresh_interval)
             self._refresh_once_()

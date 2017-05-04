@@ -33,6 +33,7 @@ class Master():
         self.dags = dag_info.select_need_start_dag(current_time)
 
     def scheduler(self):
+        self._refresh_once_()
         while True:
             for dag_row in self.dags:
                 succ = dag_info.update_dag_status_and_starttime(dag_row)

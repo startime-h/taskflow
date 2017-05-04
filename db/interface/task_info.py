@@ -197,6 +197,23 @@ def get_task_run_machine(task_id):
     row = rows[0]
     return row[table_struct.TaskInfo.RunMachine]
 
+def update_task_status(task_id, new_status):
+    '''
+    update task status
+
+    @task_id: task id
+    @new_status: new status
+
+    return True/False
+    '''
+    cond_map = {
+        table_struct.TaskInfo.TaskId: task_id
+    }
+    new_value_map = {
+        table_struct.TaskInfo.TaskStatus: new_status
+    }
+    return update_task_info(new_value_map, cond_map)
+
 if __name__ == '__main__':
     rows = select_all_task_info()
     for row in rows: print row

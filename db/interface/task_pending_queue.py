@@ -58,19 +58,21 @@ def add_pending_task(task_id, machine_ip):
         return False
     return True
 
-def delete_pending_task(cond_map):
+def delete_pending_task(task_id, machine_ip):
     '''
     delete pending task record
 
-    @cond_map = {
-        'task_id': ...
-        'machine_ip': ...
-    }
+    @task_id: ...
+    @machine_ip: ...
 
     return True/False
     '''
     table = table_struct.T_TASK_PENDING_QUEUE
     mysql = mysql_wrapper.MysqlWrapper()
+    cond_map = {
+        table_struct.TaskPendingQueue.TaskId: task_id,
+        table_struct.TaskPendingQueue.MachineIp: machine_ip
+    }
     succ = mysql.delete(table, cond_map)
     if succ is False:
         logger.error('Delete pending task fail.')

@@ -16,24 +16,26 @@ def get_hostname():
     '''
     get machine hostname
 
-    return hostname/None
+    return True, hostname
+           False, stderr
     '''
     cmd = 'hostname'
     stdout, stderr = sub_process.run(cmd)
     if len(stderr.strip()) != 0:
         logger.error('Get hostname error:[%s]' % stderr.strip())
-        return None
-    return stdout.strip()
+        return False, stderr
+    return True, stdout.strip()
 
 def get_hostip():
     '''
     get machine ip address
 
-    return hostname/None
+    return True, hostname
+           False, stderr
     '''
     cmd = 'hostname -i'
     stdout, stderr = sub_process.run(cmd)
     if len(stderr.strip()) != 0:
         logger.error('Get hostname error:[%s]' % stderr.strip())
-        return None
-    return stdout.strip()
+        return False, stderr
+    return True, stdout.strip()
