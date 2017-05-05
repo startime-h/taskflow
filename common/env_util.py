@@ -6,8 +6,8 @@ import sys
 import logging
 
 import sys_path
-import logging_config
 import sub_process
+import logging_config
 
 logger = logging_config.commonLogger()
 logger.setLevel(logging.INFO)

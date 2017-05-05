@@ -116,8 +116,3 @@ def delete_project_info(cond_map):
         logger.error('Delete project info fail.')
         return False
     return True
-
-if __name__ == '__main__':
-    rows = select_all_project_info()
-    for row in rows: print row
-    pass

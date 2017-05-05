@@ -121,8 +121,3 @@ def delete_dag_run_history(cond_map):
         logger.error('Delete dag run history fail.')
         return False
     return True
-
-if __name__ == '__main__':
-    rows = select_all_dag_run_history()
-    for row in rows: print row
-    pass

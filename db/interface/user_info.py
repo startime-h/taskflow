@@ -133,8 +133,3 @@ def delete_user_info(cond_map):
         logger.error('Delete user info fail.')
         return False
     return True
-
-if __name__ == '__main__':
-    rows = select_all_user_info()
-    for row in rows: print row
-    pass

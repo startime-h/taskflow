@@ -78,6 +78,3 @@ def delete_pending_task(task_id, machine_ip):
         logger.error('Delete pending task fail.')
         return False
     return True
-
-if __name__ == '__main__':
-    pass

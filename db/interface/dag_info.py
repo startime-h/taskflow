@@ -201,9 +201,3 @@ def update_dag_status(row_id, new_status):
         table_struct.DagInfo.DagStatus: new_status
     }
     return update_dag_info(new_value_map, cond_map)
-
-if __name__ == '__main__':
-    rows = select_all_dag_info()
-    for row in rows:
-        print row
-    pass

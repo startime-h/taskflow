@@ -121,8 +121,3 @@ def delete_task_run_history(cond_map):
         logger.error('Delete task run history fail.')
         return False
     return True
-
-if __name__ == '__main__':
-    rows = select_all_task_run_history()
-    for row in rows: print row
-    pass

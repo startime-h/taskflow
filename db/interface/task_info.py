@@ -213,8 +213,3 @@ def update_task_status(task_id, new_status):
         table_struct.TaskInfo.TaskStatus: new_status
     }
     return update_task_info(new_value_map, cond_map)
-
-if __name__ == '__main__':
-    rows = select_all_task_info()
-    for row in rows: print row
-    pass
