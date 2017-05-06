@@ -3,11 +3,8 @@
 from flask import render_template, redirect, url_for, abort
 from flask_login import login_required
 
-from .daemon import app
-from .api import get_jobs, import_job
-
-dagobah = app.config['dagobah']
-
+from app import app
+from api import get_jobs, import_job
 
 @app.route('/', methods=['GET'])
 def index_route():
@@ -35,7 +32,7 @@ def job_detail(job_id=None):
     jobs = [job for job in get_jobs() if str(job['job_id']) == job_id]
     if not jobs:
         abort(404)
-    return render_template('job_detail.html', job=jobs[0], hosts=dagobah.get_hosts())
+    return render_template('job_detail.html', job=jobs[0], hosts='127.0.0.1')
 
 @app.route('/job/<job_id>/<task_name>', methods=['GET'])
 @login_required
