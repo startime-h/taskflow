@@ -24,6 +24,7 @@ setup_status = setup(
         'flask-cache>=0.13.1',
         'flask-swagger>=0.2.13',
         'flask-wtf>=0.12',
+        'werkzeug>=0.12',
         'future>=0.16.0',
         'jinja2>=2.7.3',
     ],

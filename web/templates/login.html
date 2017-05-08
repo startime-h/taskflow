@@ -1,45 +1,26 @@
 {% extends 'base.html' %}
 
 {% block head %}
-{{ super() }}
-<link rel="stylesheet" type="text/css" href="/static/css/login.css"></link>
+    {{ super() }}
 {% endblock head %}
 
-{% block body_scripts %}
-<script>
-  $(document).ready(function() {
-    $('#password').select();
-  });
-</script>
-{% endblock body_scripts %}
-
 {% block content %}
-
-<div class='row'>
-  <div class='span6 offset3'>
-
-    {% if alert %}
-      <div class='alert alert-error'>{{ alert }}</div>
-    {% endif %}
-
-    <form class='form form-horizontal' action='{{ url_for('do_login') }}' method='post'>
-
-      <div class='control-group'>
-    	<label class='control-label' for='password'>Password</label>
-    	<div class='controls'>
-    	  <input type='password' id='password' name='password' placeholder='Password'></input>
-    	</div>
-      </div>
-
-      <div class='control-group'>
-        <div class='controls'>
-          <button id='submit' type='submit' class='btn btn-success'>Authenticate</button>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center login-title">Sign in to Airflow</h1>
+            <div class="account-wall">
+                <form class="form-signin" method="post" action="{{ url_for('login') }}">
+                    <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
+                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
+                        Sign in</button>
+                        <input type="checkbox" value="remember-me">
+                        Remember me
+                </form>
+            </div>
         </div>
-      </div>
-
-    </form>
-
-  </div>
+    </div>
 </div>
 
-{% endblock content %}
+{% endblock %}
