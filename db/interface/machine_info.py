@@ -49,7 +49,7 @@ def select_machine_info(machine_name, machine_ip):
     rows = mysql.select(table, cond_map)
     if len(rows) == 0:
         logger.error('Select machine info get empty rows')
-        return list()
+        return dict()
     return rows[0]
 
 def add_machine_info(machine_name, machine_ip):

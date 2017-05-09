@@ -3,8 +3,9 @@ use test;
 drop table if exists user_info;
 CREATE TABLE user_info (
     id   INT NOT NULL AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
     user_name VARCHAR(255) NOT NULL,
+    user_password_hash VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );

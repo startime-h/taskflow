@@ -20,11 +20,14 @@ class UserInfo():
     @id: primary key
     @user_id: user id
     @user_name: user name
+    @user_password_hash: user password hash value
+    @user_email: user email
     '''
 
     ID = 'id'
     UserId = 'user_id'
     UserName = 'user_name'
+    UserPasswordHash = 'user_password_hash'
     UserEmail = 'user_email'
 
 class ProjectInfo():

@@ -7,12 +7,12 @@ use test;
  table: user_info
  */
 insert into 
-user_info(id, user_id, user_name, user_email)
-values (1, 1, 'user1', 'user1@gmail.com'),
-(2, 2, 'user2', 'user2@gmail.com'),
-(3, 3, 'user3', 'user3@gmail.com'),
-(4, 4, 'user4', 'user4@gmail.com'),
-(5, 5, 'user5', 'user5@gmail.com');
+user_info(id, user_id, user_name, user_password_hash,user_email)
+values (1, 'user1_id', 'user1', 'user1password', 'user1@gmail.com'),
+(2, 'user2_id', 'user2', 'user2password', 'user2@gmail.com'),
+(3, 'user3_id', 'user3', 'user3password', 'user3@gmail.com'),
+(4, 'user4_id', 'user4', 'user4password', 'user4@gmail.com'),
+(5, 'user5_id', 'user5', 'user5password', 'user5@gmail.com');
 
 /*
  table: project_info

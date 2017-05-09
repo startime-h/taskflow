@@ -46,7 +46,7 @@ def select_task_by_id(task_id, fields = '*'):
     rows = mysql.select(table, cond_map, fields)
     if len(rows) == 0:
         logger.error('Select task info get empty rows')
-        return list()
+        return dict()
     return rows[0]
 
 def select_task_info(cond_map, fields = '*'):

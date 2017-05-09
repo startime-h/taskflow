@@ -5,10 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>{% block title %}Taskflow{% endblock title %}</title>
   <meta name="description" content="Taskflow is Distributed task scheduling system">
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">  
-  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-theme.css">
-  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-toggle.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+  <link rel='icon' src='/static/img/favicon.ico' type='image/x-icon' />
+  <link rel='shortcut icon' src='/static/img/favicon.ico' type='image/x-icon' />
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/css/bootstrap-theme.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/bootstrap-toggle.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/base.css" type="text/css">
 {% endblock head %}
 </head>
 
@@ -20,13 +22,16 @@
       <div class="collapse navbar-collapse" id="admin-navbar-collapse">
 	    <a class='navbar-brand' href={{ url_for('index_route') }}>Taskflow</a>
 	    <ul id='navbar-left' class='nav navbar-nav'>
-          <li id='DAG'><a href={{ url_for('jobs') }}>DAG</a></li>
-          <li id='MachineList'><a href={{ url_for('jobs') }}>MchineList</a></li>
-          <li id='Configuration'><a href={{ url_for('jobs') }}>Configuration</a></li>
+          <li id='DAG'><a href={{ url_for('dags') }}>DAG</a></li>
+          <li id='MachineList'><a href={{ url_for('dags') }}>MchineList</a></li>
+          <li id='Configuration'><a href={{ url_for('dags') }}>Configuration</a></li>
 	    </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a id="clock"></a></li>
               {% if current_user.is_authenticated %}
+                {% if False %}
+                    <li><a href="{{ url_for('register') }}"><span data-toggle="tooltip" data-placement="left" title="Register"></span>Logout</a></li>
+                {% endif %}
                 <li><a href="{{ url_for('logout') }}"><span data-toggle="tooltip" data-placement="left" title="Logout"></span>Logout</a></li>
               {% endif %}
         </ul>
@@ -40,11 +45,10 @@
   {% endblock content %}
   </div>
 
+  {% block tail %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="/static/lib/Kickstrap1.3.0/Kickstrap/js/jquery-1.8.2.min.js"><\/script>');</script>
-  <script src="/static/lib/Kickstrap1.3.2/Kickstrap/apps/bootstrap/bootstrap.min.js"></script>
-  <script src="/static/js/navbar.js"></script>
-  {% block body_scripts %}
-  {% endblock body_scripts %}
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="/static/js/bootstrap-toggle.min.js"></script>
+  {% endblock tail %}
 </body>
 </html>

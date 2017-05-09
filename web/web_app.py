@@ -8,22 +8,22 @@ import logging
 import threading
 import sys_path
 
-from common import logging_config
-from common import config_parser
 from flask import Flask
+from flask_wtf.csrf import CsrfProtect
 from flask_login import LoginManager
 
+from common import logging_config
+from common import config_parser
 logger = logging_config.webLogger()
 logger.setLevel(logging.INFO)
 
-WEB_CONF_PATH = sys_path.__parent_dir__ + '/conf/web.cfg'
-
 app = Flask(__name__)
 login_manager = LoginManager()
-login_manager.login_view = "login"
+csrf = CsrfProtect()
 
 def init_app_config(app):
-    web_config = config_parser.Config(WEB_CONF_PATH)
+    web_conf_path= sys_path.__parent_dir__ + '/conf/web.cfg'
+    web_config = config_parser.Config(web_conf_path)
 
     # app config
     app.debug = web_config.get_section_key('web', 'debug')
@@ -33,9 +33,15 @@ def init_app_config(app):
     app.config['APP_HOST'] = web_config.get_section_key('web', 'host')
     app.config['APP_PORT'] = web_config.get_section_key('web', 'port')
 
-    # login manager init app
+def init_login_manager(app):
+    login_manager.session_protection = 'strong'
+    login_manager.login_view = 'login'
     login_manager.init_app(app)
+
+def init_csrf(app):
+    csrf.init_app(app)
 
 # init app config
 init_app_config(app)
-
+init_login_manager(app)
+init_csrf(app)
