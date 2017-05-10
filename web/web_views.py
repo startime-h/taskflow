@@ -11,8 +11,8 @@ from flask_wtf import Form
 from wtforms import StringField, BooleanField, PasswordField
 from wtforms.validators import DataRequired
 from flask import render_template, request, redirect, url_for, abort
-from flask_login import login_user, login_required
-from flask_login import login_required
+from flask_login import current_user
+from flask_login import login_user, logout_user, login_required
 
 from web_app import app
 from web_login import User
@@ -33,8 +33,10 @@ class RegisterForm(Form):
 # login route
 @app.route('/login', methods=['GET'])
 def login():
+    page_type='login'
     form = LoginForm()
-    return render_template('login.html', form=form, alert=request.args.get('alert'))
+    return render_template('login.html', form=form, \
+           page_type = page_type, alert=request.args.get('alert'))
 
 @app.route('/dologin', methods=['POST'])
 def dologin():
@@ -60,8 +62,10 @@ def logout():
 # register route
 @app.route('/register', methods=['GET'])
 def register():
+    page_type='register'
     form = RegisterForm()
-    return render_template('register.html', form=form, alert=request.args.get('alert'))
+    return render_template('register.html', form=form,
+           page_type=page_type, alert=request.args.get('alert'))
 
 @app.route('/doregister', methods=['POST'])
 def doregister():
@@ -78,9 +82,29 @@ def doregister():
 @app.route('/', methods=['GET'])
 @login_required
 def index_route():
-    return redirect(url_for('dags'))
+    return redirect(url_for('me'))
 
-@app.route('/dags', methods=['GET'])
+@app.route('/me', methods=['GET'])
 @login_required
-def dags():
-    return render_template('dags.html')
+def me_dags():
+    return render_template('me_dags.html', me_dags_active='True')
+
+@app.route('/all', methods=['GET'])
+@login_required
+def all_dags():
+    return render_template('all_dags.html', all_dags_active='True')
+
+@app.route('/configuration', methods=['GET'])
+@login_required
+def configuration():
+    return render_template('configuration.html', configuration_active='True')
+
+@app.route('/help', methods=['GET'])
+@login_required
+def help():
+    return render_template('help.html', help_active='True')
+
+@app.route('/personal', methods=['GET'])
+@login_required
+def personal():
+    return render_template('personal.html', personal_active='True')

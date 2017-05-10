@@ -3,8 +3,8 @@
 
 import os
 import sys
-import logging
 import time
+import logging
 import datetime
 import sys_path
 

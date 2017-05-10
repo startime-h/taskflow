@@ -6,9 +6,8 @@ import sys
 import logging
 import ConfigParser
 
-import logging_config
 import sys_path
-
+import logging_config
 logger = logging_config.commonLogger()
 logger.setLevel(logging.INFO)
 

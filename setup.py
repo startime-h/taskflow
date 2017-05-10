@@ -3,13 +3,13 @@
 import os
 import sys
 import logging
-from setuptools import setup, find_packages, Command
+from setuptools import setup, find_packages
 
 setup_status = setup(
     name='TaskFlow',
     description='Programmatically author, schedule and monitor data pipelines',
     license='Apache License 2.0',
-    version='0.0.2',
+    version='0.0.3',
     packages=find_packages(),
     include_package_data=True,
     data_files = [
@@ -25,6 +25,7 @@ setup_status = setup(
         'flask-swagger>=0.2.13',
         'flask-wtf>=0.12',
         'werkzeug>=0.12',
+        'wtforms>=2.1',
         'future>=0.16.0',
         'jinja2>=2.7.3',
     ],
