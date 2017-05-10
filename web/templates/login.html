@@ -4,32 +4,30 @@
     {{ super() }}
 {% endblock head %}
 
-{% block content %}
+{% block body %}
     {{ super() }}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-md-offset-4">
-                <br/>
-                <h1 class="text-center login-title">登陆</h1>
-                <div class="account-wall">
-                    <form class="form-signin" method="post" action="{{ url_for('dologin') }}">
-                        <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
-                        <br/>
-                        <input type="password" class="form-control" placeholder="Password" name="password" required>
-                        <br/>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Signin</button>
-                        <br/>
-                        <input type="checkbox" value="remember-me">Remember me
-                        <input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
-                    </form>
-                </div>
-                {% if alert %}
-                    <div class="alert alert-warning">
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>警告:</strong>密码输入错误!
-                    </div>
-                {% endif %}
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-center-block">
+            <br/>
+            <h1 class="text-center login-title">登陆</h1>
+            <div class="account-wall">
+                <form class="form-signin" method="post" action="{{ url_for('dologin') }}">
+                    <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
+                    <br/>
+                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                    <br/>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Signin</button>
+                    <br/>
+                    <input type="checkbox" value="remember-me">Remember me
+                    <input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
+                </form>
             </div>
+            {% if alert %}
+                <div class="alert alert-warning">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>警告:</strong>密码输入错误!
+                </div>
+            {% endif %}
         </div>
     </div>
-{% endblock %}
+{% endblock body %}

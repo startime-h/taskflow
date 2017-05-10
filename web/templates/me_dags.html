@@ -6,14 +6,56 @@
     <link href='/static/css/bootstrap-toggle.min.css' rel="stylesheet" type="text/css">
 {% endblock head %}
 
-{% block content %}
+{% block body %}
     {{ super() }}
-    <h2>DAGs</h2>
-{% endblock content %}
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+        <div class="project-search">
+            <input type="text" class="form-control input-sm" placeholder="Search dag">
+        </div>
+        <ul class="current">
+            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
+            <ul>
+                <li class="toctree-l2"><a class="reference internal" href="#dags-view">DAGs View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#tree-view">Tree View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#graph-view">Graph View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#variable-view">Variable View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#gantt-chart">Gantt Chart</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#task-duration">Task Duration</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#code-view">Code View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#task-instance-context-menu">Task Instance Context Menu</a></li>
+            </ul>
+            </li>
+            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
+            <ul>
+                <li class="toctree-l2"><a class="reference internal" href="#dags-view">DAGs View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#tree-view">Tree View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#graph-view">Graph View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#variable-view">Variable View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#gantt-chart">Gantt Chart</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#task-duration">Task Duration</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#code-view">Code View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#task-instance-context-menu">Task Instance Context Menu</a></li>
+            </ul>
+            </li>
+            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
+            <ul>
+                <li class="toctree-l2"><a class="reference internal" href="#dags-view">DAGs View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#tree-view">Tree View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#graph-view">Graph View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#variable-view">Variable View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#gantt-chart">Gantt Chart</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#task-duration">Task Duration</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#code-view">Code View</a></li>
+                <li class="toctree-l2"><a class="reference internal" href="#task-instance-context-menu">Task Instance Context Menu</a></li>
+            </ul>
+            </li>
+        </ul>
+    </nav>
+{% endblock body %}
 
 {% block tail %}
-  {{ super() }}
-  <script src='/static/js/d3.v3.min.js'></script>
-  <script src='/static/js/jquery.dataTables.min.js'></script>
-  <script src='/static/js/bootstrap-toggle.min.js'></script>
+    {{ super() }}
+    <script src='/static/js/d3.v3.min.js'></script>
+    <script src='/static/js/jquery.dataTables.min.js'></script>
+    <script src='/static/js/bootstrap-toggle.min.js'></script>
 {% endblock %}

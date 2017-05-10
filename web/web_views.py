@@ -33,6 +33,8 @@ class RegisterForm(Form):
 # login route
 @app.route('/login', methods=['GET'])
 def login():
+    if current_user.is_authenticated():
+        return redirect(url_for('me_dags'))
     page_type='login'
     form = LoginForm()
     return render_template('login.html', form=form, \
@@ -51,7 +53,7 @@ def dologin():
         return redirect(url_for('login', alert="Incorrect password"))
     # check success
     login_user(user)
-    return redirect(url_for('dags'))
+    return redirect(url_for('me_dags'))
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
@@ -82,7 +84,7 @@ def doregister():
 @app.route('/', methods=['GET'])
 @login_required
 def index_route():
-    return redirect(url_for('me'))
+    return redirect(url_for('me_dags'))
 
 @app.route('/me', methods=['GET'])
 @login_required
@@ -94,10 +96,10 @@ def me_dags():
 def all_dags():
     return render_template('all_dags.html', all_dags_active='True')
 
-@app.route('/configuration', methods=['GET'])
+@app.route('/permission', methods=['GET'])
 @login_required
-def configuration():
-    return render_template('configuration.html', configuration_active='True')
+def permission():
+    return render_template('permission.html', permission_active='True')
 
 @app.route('/help', methods=['GET'])
 @login_required

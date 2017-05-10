@@ -1,4 +1,6 @@
-body { padding-top: 70px; }
+body { 
+    padding-top: 70px; 
+}
 a.navbar-brand span {
     color: white;
 }
