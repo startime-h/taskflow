@@ -39,6 +39,7 @@ class ProjectInfo():
     @project_name: project name
     @create_user_id: create user id
     @create_time: create time
+    @project_desc: project description
     @permission_users: has permission users list
     '''
 
@@ -47,6 +48,7 @@ class ProjectInfo():
     ProjectName = 'project_name'
     CreateUserId = 'create_user_id'
     CreateTime = 'create_time'
+    ProjectDesc = 'project_desc'
     PermissionUsers = 'permission_users'
 
 class DagInfo():

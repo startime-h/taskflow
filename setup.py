@@ -6,7 +6,7 @@ import logging
 from setuptools import setup, find_packages
 
 setup_status = setup(
-    name='TaskFlow',
+    name='taskflow',
     description='Programmatically author, schedule and monitor data pipelines',
     license='Apache License 2.0',
     version='0.0.3',

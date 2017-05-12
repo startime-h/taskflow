@@ -18,6 +18,7 @@ CREATE TABLE project_info (
     project_name VARCHAR(255) NOT NULL,
     create_user_id INT NOT NULL,
     create_time  datetime NOT NULL,
+    project_desc  VARCHAR(255) NOT NULL,
     permission_users VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );

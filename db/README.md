@@ -21,6 +21,7 @@ CREATE TABLE project_info (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_name VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_user_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_time  datetime NOT NULL,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_desc VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;permission_users VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRIMARY KEY (id)  
 );  

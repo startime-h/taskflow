@@ -23,6 +23,7 @@ logger.setLevel(logging.INFO)
 class User(UserMixin):
     def __init__(self, username, password='', email=''):
         self.username = username
+        self.text_password = password
         self.password = self.__generate_password_hash__(password)
         self.email = email
         self.id = self.get_id()
@@ -58,6 +59,11 @@ class User(UserMixin):
             logger.error('Fail get user password from mysql. user name:[%s]' % self.username)
             return False
         return check_password_hash(store_password_hash, password)
+
+    def validate(self):
+        if self.username in [None, ''] or self.text_password in [None, '']:
+            return False
+        return True
 
     @staticmethod
     def get(user_id):

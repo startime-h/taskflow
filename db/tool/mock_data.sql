@@ -18,13 +18,13 @@ values (1, 'user1_id', 'user1', 'user1password', 'user1@gmail.com', '2017-01-01 
  table: project_info
  */
 insert into 
-project_info(id, project_id, project_name, create_user_id, create_time, permission_users)
+project_info(id, project_id, project_name, create_user_id, create_time, project_desc, permission_users)
 values 
-(1, 1, 'project1', 1, '2017-04-29 00:00:01', '1'),
-(2, 2, 'project2', 2, '2017-04-29 00:01:01', '2'),
-(3, 3, 'project3', 3, '2017-04-29 00:04:01', '3'),
-(4, 4, 'project4', 4, '2017-04-29 00:08:01', '4,2'),
-(5, 5, 'project5', 5, '2017-04-29 00:18:01', '5,3');
+(1, 1, 'project1', 1, '2017-04-29 00:00:01', 'desc1', '1'),
+(2, 2, 'project2', 2, '2017-04-29 00:01:01', 'desc2', '2'),
+(3, 3, 'project3', 3, '2017-04-29 00:04:01', 'desc3', '3'),
+(4, 4, 'project4', 4, '2017-04-29 00:08:01', 'desc4', '4,2'),
+(5, 5, 'project5', 5, '2017-04-29 00:18:01', 'desc5', '5,3');
 
 /*
  table: dag_info

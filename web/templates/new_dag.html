@@ -1,0 +1,59 @@
+{% extends 'dags_base.html' %}
+
+{% block head %}
+    {{ super() }}
+{% endblock head %}
+
+{% block dags %}
+    {{ super() }}
+    <ul class="current">
+        <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="#dags-view">DAGs View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#tree-view">Tree View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#graph-view">Graph View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#variable-view">Variable View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#gantt-chart">Gantt Chart</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#task-duration">Task Duration</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#code-view">Code View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#task-instance-context-menu">Task Instance Context Menu</a></li>
+        </ul>
+        </li>
+    </ul>
+{% endblock dags %}
+
+{% block body %}
+    {{ super() }}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-md-offset-4">
+                <br/>
+                <div class="account-wall">
+                    <form class="form-signin" method="post" action="{{ url_for('new_dag') }}">
+                        <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
+                        <br/>
+                        <input type="password" class="form-control" placeholder="Password" name="password" required>
+                        <br/>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Signin</button>
+                        <br/>
+                        <input type="checkbox" value="remember-me">Remember me
+                        <input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
+                    </form>
+                </div>
+                {% if alert %}
+                    <div class="alert alert-warning">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>警告:</strong>密码输入错误!
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block tail %}
+  {{ super() }}
+  <script src='/static/js/d3.v3.min.js'></script>
+  <script src='/static/js/jquery.dataTables.min.js'></script>
+  <script src='/static/js/bootstrap-toggle.min.js'></script>
+{% endblock %}

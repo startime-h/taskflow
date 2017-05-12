@@ -1,36 +1,53 @@
-{% extends 'base.html' %}
+{% extends 'dags_base.html' %}
 
 {% block head %}
     {{ super() }}
     <link href='/static/css/dataTables.bootstrap.css' rel="stylesheet" type="text/css" >
-    <link href='/static/css/bootstrap-toggle.min.css' rel="stylesheet" type="text/css">
 {% endblock head %}
+
+{% block dags %}
+    {{ super() }}
+    <ul class="current">
+        <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="#dags-view">DAGs View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#tree-view">Tree View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#graph-view">Graph View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#variable-view">Variable View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#gantt-chart">Gantt Chart</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#task-duration">Task Duration</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#code-view">Code View</a></li>
+            <li class="toctree-l2"><a class="reference internal" href="#task-instance-context-menu">Task Instance Context Menu</a></li>
+        </ul>
+        </li>
+    </ul>
+{% endblock dags %}
 
 {% block body %}
     {{ super() }}
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-        <div class="project-search">
-            <input type="text" class="form-control input-sm" placeholder="Search dag">
+    <div class='page-header'>
+        <h3>流程列表</h3>
+    </div>
+    <div>
+        <table id="dags" class="dags-table table table-hover">
+            <thead>
+                <tr>
+                    <th>所属项目</th>
+                    <th>流程名称</th>
+                    <th>状态</th>
+                    <th>启动时间</th>
+                    <th>结束时间</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
         </div>
-        <ul class="current">
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-        </ul>
-    </nav>
+        <div>
+           <ul class="pagination">
+            </ul> 
+        </div>
+    </div>
 {% endblock body %}
 
 {% block tail %}

@@ -26,7 +26,7 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" rel="home" href="{{ url_for("my_dags") }}" style="cursor: pointer;">
+                  <a class="navbar-brand" rel="home" href="{{ url_for("dags") }}" style="cursor: pointer;">
                       <img style="float: left; width:35px; margin-top: -7px;" src="/static/img/navbar_logo.png">
                       <span>Taskflow</span>
                   </a>
@@ -34,15 +34,20 @@
               <!-- navbar content -->
               <div class="collapse navbar-collapse" id="admin-navbar-collapse">
                   <ul id="navbar-left" class="nav navbar-nav">
-                      {% if my_dags_active %}
-                      <li id="my_dags" class="active"><a href={{ url_for("my_dags") }}>我的项目</a></li>
-                      {% else %}
-                      <li id="my_dags"><a href={{ url_for("my_dags") }}>我的项目</a></li>
-                      {% endif %}
                       {% if all_dags_active %}
-                      <li id="all_dags" class="active"><a href={{ url_for("all_dags") }}>所有项目</a></li>
+                      <li id="all_dags" class="active"><a href={{ url_for("dags") }}>流程列表</a></li>
                       {% else %}
-                      <li id="all_dags"><a href={{ url_for("all_dags") }}>所有项目</a></li>
+                      <li id="all_dags"><a href={{ url_for("dags") }}>流程列表</a></li>
+                      {% endif %}
+                      {% if new_project_active %}
+                      <li id="new_project" class="active"><a href={{ url_for("new_project") }}>新建项目</a></li>
+                      {% else %}
+                      <li id="new_project"><a href={{ url_for("new_project") }}>新建项目</a></li>
+                      {% endif %}
+                      {% if new_dag_active %}
+                      <li id="new_dag" class="active"><a href={{ url_for("new_dag") }}>新建流程</a></li>
+                      {% else %}
+                      <li id="new_dag"><a href={{ url_for("new_dag") }}>新建流程</a></li>
                       {% endif %}
                       {% if permission_active %}
                       <li id="permission" class="active"><a href={{ url_for("permission") }}>权限管理</a></li>
@@ -69,6 +74,18 @@
       </nav>
     </div>
     <div class="main_container">
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="project-search">
+                <ul class="nav nav-tabs" id="myTab"> 
+                    <li class="active"><a href="get_my_dags">我的流程</a></li> 
+                    <li><a href="get_all_dags">所有流程</a></li> 
+                </ul> 
+            </div>
+            <div>
+                {% block dags %}
+                {% endblock dags %}
+            </div>
+        </nav>
         {% block body %}
         {% endblock body %}
     </div>
