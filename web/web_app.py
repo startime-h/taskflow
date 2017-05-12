@@ -9,7 +9,7 @@ import threading
 import sys_path
 
 from flask import Flask
-from flask_wtf.csrf import CsrfProtect
+from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
 
 from common import logging_config
@@ -19,7 +19,7 @@ logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
 login_manager = LoginManager()
-csrf = CsrfProtect()
+csrf = CSRFProtect()
 
 def init_app_config(app):
     web_conf_path= sys_path.__parent_dir__ + '/conf/web.cfg'

@@ -53,7 +53,7 @@ def has_user_info(user_name):
         return False
     return True
 
-def add_user_info(user_id, user_name, user_password_hash,user_email):
+def add_user_info(user_id, user_name, user_password_hash,user_email, register_time):
     '''
     Add user info record
 
@@ -61,6 +61,7 @@ def add_user_info(user_id, user_name, user_password_hash,user_email):
     @user_name: user name
     @user_password_hash: user password hash
     @user_email: user email
+    @register_time: register time
 
     return True: sucess
            False: fail
@@ -71,7 +72,8 @@ def add_user_info(user_id, user_name, user_password_hash,user_email):
         table_struct.UserInfo.UserId: user_id,
         table_struct.UserInfo.UserName: user_name,
         table_struct.UserInfo.UserPasswordHash: user_password_hash,
-        table_struct.UserInfo.UserEmail: user_email
+        table_struct.UserInfo.UserEmail: user_email,
+        table_struct.UserInfo.RegisterTime: register_time
     }
     mysql = mysql_wrapper.MysqlWrapper()
     succ = mysql.insert(table, cond_map)

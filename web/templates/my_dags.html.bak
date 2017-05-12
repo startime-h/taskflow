@@ -51,6 +51,105 @@
             </li>
         </ul>
     </nav>
+    <div class='page-header'>
+        <h3>我的流程</h3>
+    </div>
+    <div>
+        <table id="dags" class="dags-table table table-hover">
+            <thead>
+                <tr>
+                    <th>所属项目</th>
+                    <th>流程名称</th>
+                    <th>状态</th>
+                    <th>启动时间</th>
+                    <th>结束时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="active">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+                <tr class="success">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+                <tr class="warning">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+                <tr class="danger">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+                <tr class="info">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+                <tr class="active">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+                <tr class="success">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+                <tr class="warning">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+                <tr class="danger">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+                <tr class="info">
+                    <td>Project1</td>
+                    <td>Dag1</td>
+                    <td>Running</td>
+                    <td>2017-05-11 16:37:24</td>
+                    <td>2017-05-11 16:37:24</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div>
+           <ul class="pagination">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul> 
+        </div>
 {% endblock body %}
 
 {% block tail %}

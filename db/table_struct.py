@@ -22,6 +22,7 @@ class UserInfo():
     @user_name: user name
     @user_password_hash: user password hash value
     @user_email: user email
+    @register_time: register time
     '''
 
     ID = 'id'
@@ -29,6 +30,7 @@ class UserInfo():
     UserName = 'user_name'
     UserPasswordHash = 'user_password_hash'
     UserEmail = 'user_email'
+    RegisterTime = 'register_time'
 
 class ProjectInfo():
     '''

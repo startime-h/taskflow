@@ -7,7 +7,7 @@ import time
 import logging
 import sys_path
 
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, PasswordField
 from wtforms.validators import DataRequired
 from flask import render_template, request, redirect, url_for, abort
@@ -20,12 +20,12 @@ from common import logging_config
 logger = logging_config.webLogger()
 logger.setLevel(logging.INFO)
 
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     username = StringField('User Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('remember me', default=False)
 
-class RegisterForm(Form):
+class RegisterForm(FlaskForm):
     username = StringField('User Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     email= StringField('Email Address', validators=[DataRequired()])
@@ -33,8 +33,8 @@ class RegisterForm(Form):
 # login route
 @app.route('/login', methods=['GET'])
 def login():
-    if current_user.is_authenticated():
-        return redirect(url_for('me_dags'))
+    if current_user.is_authenticated:
+        return redirect(url_for('my_dags'))
     page_type='login'
     form = LoginForm()
     return render_template('login.html', form=form, \
@@ -53,7 +53,7 @@ def dologin():
         return redirect(url_for('login', alert="Incorrect password"))
     # check success
     login_user(user)
-    return redirect(url_for('me_dags'))
+    return redirect(url_for('my_dags'))
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
@@ -84,12 +84,12 @@ def doregister():
 @app.route('/', methods=['GET'])
 @login_required
 def index_route():
-    return redirect(url_for('me_dags'))
+    return redirect(url_for('my_dags'))
 
-@app.route('/me', methods=['GET'])
+@app.route('/my', methods=['GET'])
 @login_required
-def me_dags():
-    return render_template('me_dags.html', me_dags_active='True')
+def my_dags():
+    return render_template('my_dags.html', my_dags_active='True')
 
 @app.route('/all', methods=['GET'])
 @login_required
@@ -105,8 +105,3 @@ def permission():
 @login_required
 def help():
     return render_template('help.html', help_active='True')
-
-@app.route('/personal', methods=['GET'])
-@login_required
-def personal():
-    return render_template('personal.html', personal_active='True')

@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/static/css/bootstrap-theme.css" type="text/css">
   <link rel="stylesheet" href="/static/css/bootstrap-toggle.min.css" type="text/css">
   <link rel="stylesheet" href="/static/css/base.css" type="text/css">
-  <link rel="stylesheet" href="/static/css/taskflow.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/auth_base.css" type="text/css">
 {% endblock head %}
 </head>
 
@@ -34,26 +34,6 @@
               <!-- navbar content -->
               <div class="collapse navbar-collapse" id="admin-navbar-collapse">
                   <ul id="navbar-left" class="nav navbar-nav">
-                      {% if my_dags_active %}
-                      <li id="my_dags" class="active"><a href={{ url_for("my_dags") }}>我的项目</a></li>
-                      {% else %}
-                      <li id="my_dags"><a href={{ url_for("my_dags") }}>我的项目</a></li>
-                      {% endif %}
-                      {% if all_dags_active %}
-                      <li id="all_dags" class="active"><a href={{ url_for("all_dags") }}>所有项目</a></li>
-                      {% else %}
-                      <li id="all_dags"><a href={{ url_for("all_dags") }}>所有项目</a></li>
-                      {% endif %}
-                      {% if permission_active %}
-                      <li id="permission" class="active"><a href={{ url_for("permission") }}>权限管理</a></li>
-                      {% else %}
-                      <li id="permission"><a href={{ url_for("permission") }}>权限管理</a></li>
-                      {% endif %}
-                      {% if help_active %}
-                      <li id="help" class="active"><a href={{ url_for("help") }}>帮助</a></li>
-                      {% else %}
-                      <li id="help"><a href={{ url_for("help") }}>帮助</a></li>
-                      {% endif %}
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                       {% if page_type and page_type == "login" %}
@@ -68,7 +48,7 @@
           </div>
       </nav>
     </div>
-    <div class="main_container">
+    <div class="auth_main_container">
         {% block body %}
         {% endblock body %}
     </div>

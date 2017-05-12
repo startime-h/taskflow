@@ -1,0 +1,15 @@
+.auth_main_container {
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    padding-bottom: 2em;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    min-height: 100%;
+    z-index: 200;
+}
+
+#login-register {
+}

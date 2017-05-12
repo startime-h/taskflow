@@ -11,7 +11,7 @@
     bottom: 0;
     left: 0;
     padding-bottom: 2em;
-    width: 270px;
+    width: 20%;
     overflow-x: hidden;
     overflow-y: hidden;
     min-height: 100%;
@@ -24,3 +24,22 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+.main_container {
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    left: 22%;
+    padding-bottom: 2em;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    min-height: 100%;
+    z-index: 200;
+}
+
+.dags-table {
+    width: 75%;
+    padding-bottom: 20px;
+}
+

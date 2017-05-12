@@ -7,6 +7,7 @@ CREATE TABLE user_info (
     user_name VARCHAR(255) NOT NULL,
     user_password_hash VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
+    register_time datetime NOT NULL,
     PRIMARY KEY (id)
 );
 
