@@ -74,7 +74,7 @@ class MysqlWrapper(object):
         """
         self.connect.rollback()
 
-    def _gen_select_sql_(self, table, cond_map, fields):
+    def _gen_select_sql_(self, table, cond_map, fields, order_field, order_desc):
         try:
             sql = 'select %s from %s' % (fields, table)
             condition = ''
@@ -84,16 +84,26 @@ class MysqlWrapper(object):
                 condition = condition[:-5]
             if condition == '':
                 condition = '1 = 1'
-            sql = sql + ' where %s;' % condition
+            sql = sql + ' where %s' % condition
+            if order_field is not None:
+                if order_desc: order_sql = 'order by %s' %  order_field
+                else: order_sql = 'order by %s desc' % order_field
+                sql += sql + ' ' + order_sql
+            sql = sql + ';'
             return sql
         except Exception, e:
             logger.error('generate select sql exception:[%s]' % str(e))
             return None
 
-    def _gen_select_sql_with_condition_(self, table, condition_str, fields):
+    def _gen_select_sql_with_condition_(self, table, condition_str, fields, order_field, order_desc):
         try:
             sql = 'select %s from %s' % (fields, table)
-            sql = sql + ' where %s;' % condition_str
+            sql = sql + ' where %s' % condition_str
+            if order_field is not None:
+                if order_desc: order_sql = 'order by %s' %  order_field
+                else: order_sql = 'order by %s desc' % order_field
+                sql += sql + ' ' + order_sql
+            sql = sql + ';'
             return sql
         except Exception, e:
             logger.error('generate select sql with condition string exception:[%s]' % str(e))
@@ -229,7 +239,7 @@ class MysqlWrapper(object):
             return False
 
     ################################# public api #################################
-    def select(self, table, cond_map, fields = '*'):
+    def select(self, table, cond_map, fields = '*', order_field=None, order_desc=False):
         '''
         select table with condition map
 
@@ -246,10 +256,10 @@ class MysqlWrapper(object):
         if len(cond_map) == 0:
             logger.error('[select] condition map is empty')
             return list()
-        sql = self._gen_select_sql_(table, cond_map, fields)
+        sql = self._gen_select_sql_(table, cond_map, fields, order_field, order_desc)
         return self._select_(sql)
 
-    def select_with_condition(self, table, condition_str, fields = '*'):
+    def select_with_condition(self, table, condition_str, fields = '*', order_field=None, order_desc=False):
         '''
         select table with condition string
 
@@ -260,7 +270,7 @@ class MysqlWrapper(object):
 
         return list()
         '''
-        sql = self._gen_select_sql_with_condition_(table, condition_str, fields)
+        sql = self._gen_select_sql_with_condition_(table, condition_str, fields, order_field, order_desc)
         return self._select_(sql)
 
     def insert(self, table, cond_map):

@@ -36,7 +36,7 @@ class User(UserMixin):
             return None
 
     def __generate_user_id__(self):
-        pass
+        return user_info.get_next_user_id()
 
     def get_id(self):
         if not self.has_exist_user():
@@ -44,8 +44,7 @@ class User(UserMixin):
         return user_info.get_user_id(self.username)
 
     def register_new_user(self):
-        self.user_id = self.id
-        succ = user_info.register_new_user(self.user_id, self.username, self.password, self.email)
+        succ = user_info.register_new_user(self.username, self.password, self.email)
         if succ is False:
             logger.error('Fail Register new user. user name:[%s], email:[%s]' % (self.username, self.email))
         logger.info('Success Register new user. user name:[%s], email:[%s]' % (self.username, self.email))

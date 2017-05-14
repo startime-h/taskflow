@@ -7,9 +7,8 @@
   <meta name="description" content="Taskflow is Distributed task scheduling system">
   <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="/static/css/bootstrap-theme.css" type="text/css">
-  <link rel="stylesheet" href="/static/css/bootstrap-toggle.min.css" type="text/css">
   <link rel="stylesheet" href="/static/css/base.css" type="text/css">
   <link rel="stylesheet" href="/static/css/dags_base.css" type="text/css">
 {% endblock head %}
@@ -80,28 +79,30 @@
           </div>
       </nav>
     </div>
-    <div class="main_container">
+    <div id="nav-side">
         <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-            <div class="project-search">
+            <div id="nav-side-tab">
                 <ul class="nav nav-tabs" id="myTab"> 
-                    <li class="active"><a href="{{ url_for("get_my_dags") }}">我的流程</a></li> 
-                    <li><a href="{{ url_for("get_all_dags") }}">所有流程</a></li> 
+                    <li class="active"><a onclick="getDags({{ user_id }})" data-toggle="tab">我的流程</a></li> 
+                    <li><a onclick="getDags(0)" data-toggle="tab">所有流程</a></li> 
                 </ul> 
             </div>
-            <div>
+            <div id="nav-side-dags">
                 {% block dags %}
                 {% endblock dags %}
             </div>
         </nav>
+    </div>
+    <div class="main_container">
         {% block body %}
         {% endblock body %}
     </div>
   </div>
 
   {% block tail %}
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script src="/static/js/bootstrap-toggle.min.js"></script>
+  <script src="/static/js/dags_base.js"></script>
+  <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   {% endblock tail %}
 </body>
 </html>

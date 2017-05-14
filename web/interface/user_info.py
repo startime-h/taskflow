@@ -15,7 +15,7 @@ from db import table_struct
 logger = logging_config.webLogger()
 logger.setLevel(logging.INFO)
 
-def register_new_user(user_id, username, password, email):
+def register_new_user(username, password, email):
     '''
     register new user
 
@@ -23,14 +23,14 @@ def register_new_user(user_id, username, password, email):
 
     return True/False
     '''
-    if None in [user_id, username, password, email]:
+    if None in [username, password, email]:
         return False
     if user_info.has_user_info(username):
         return True
     register_time = time_util.get_cur_datetime()
     if register_time is None:
         return False
-    return user_info.add_user_info(user_id, username, password, email, register_time)
+    return user_info.add_user_info(username, password, email, register_time)
 
 def has_exist_user(user_name):
     '''
@@ -72,7 +72,7 @@ def get_user_id(user_name):
     row = user_info.select_user_info(cond_map)
     if len(row.keys()) == 0:
         return None
-    user_id = row[table_struct.UserInfo.UserId]
+    user_id = row[table_struct.UserInfo.ID]
     return user_id
 
 def get_user_info(user_id):
@@ -84,10 +84,19 @@ def get_user_info(user_id):
     return user_name/None
     '''
     cond_map = {
-        table_struct.UserInfo.UserId: user_id
+        table_struct.UserInfo.ID: user_id
     }
     row = user_info.select_user_info(cond_map)
     if len(row.keys()) == 0:
         return None
     user_name = row[table_struct.UserInfo.UserName]
     return user_name
+
+def get_next_user_id():
+    '''
+    get next user id
+
+    return id
+    '''
+    max_user_id = user_info.select_max_user_id()
+    return max_user_id+1

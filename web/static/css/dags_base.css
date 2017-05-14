@@ -11,35 +11,35 @@
     bottom: 0;
     left: 0;
     padding-bottom: 2em;
-    width: 20%;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    width: 15%;
     min-height: 100%;
-    z-index: 200;
 }
 
-.project-search {
-    padding-left: 20px;
-    padding-right: 20px;
+#nav-side-tab {
+    padding-left: 4%;
+    padding-right: 4%;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+#nav-side-dags {
+    height: 80%;
+    overflow:auto; 
 }
 
 .main_container {
     position: fixed;
     top: 50px;
     bottom: 0;
-    left: 22%;
+    left: 17%;
     padding-bottom: 2em;
     width: 100%;
-    overflow-x: hidden;
-    overflow-y: hidden;
     min-height: 100%;
     z-index: 200;
 }
 
 .dags-table {
-    width: 75%;
+    width: 80%;
     padding-bottom: 20px;
 }
 
