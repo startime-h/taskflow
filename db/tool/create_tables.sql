@@ -3,7 +3,6 @@ use test;
 drop table if exists user_info;
 CREATE TABLE user_info (
     id   INT NOT NULL AUTO_INCREMENT,
-    user_id VARCHAR(255) NOT NULL,
     user_name VARCHAR(255) NOT NULL,
     user_password_hash VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
@@ -14,7 +13,6 @@ CREATE TABLE user_info (
 drop table if exists project_info;
 CREATE TABLE project_info (
     id   INT NOT NULL AUTO_INCREMENT,
-    project_id INT NOT NULL,
     project_name VARCHAR(255) NOT NULL,
     create_user_id INT NOT NULL,
     create_time  datetime NOT NULL,
@@ -29,7 +27,7 @@ CREATE TABLE dag_info  (
     dag_id  INT NOT NULL,
     dag_name VARCHAR(255) NOT NULL,
     valid INT NOT NULL default 0,
-    project_id INT NOT NULL, 
+    project_name VARCHAR(255) NOT NULL, 
     create_user_id INT NOT NULL,
     create_time datetime NOT NULL,
     expire_time datetime NOT NULL,

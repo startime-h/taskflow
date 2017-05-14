@@ -7,20 +7,17 @@
 
 {% block dags %}
     {{ super() }}
-    <ul class="current">
-        <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>UI / Screenshots</a>
-        <ul>
-            <li class="toctree-l2"><a class="reference internal" href="#dags-view">DAGs View</a></li>
-            <li class="toctree-l2"><a class="reference internal" href="#tree-view">Tree View</a></li>
-            <li class="toctree-l2"><a class="reference internal" href="#graph-view">Graph View</a></li>
-            <li class="toctree-l2"><a class="reference internal" href="#variable-view">Variable View</a></li>
-            <li class="toctree-l2"><a class="reference internal" href="#gantt-chart">Gantt Chart</a></li>
-            <li class="toctree-l2"><a class="reference internal" href="#task-duration">Task Duration</a></li>
-            <li class="toctree-l2"><a class="reference internal" href="#code-view">Code View</a></li>
-            <li class="toctree-l2"><a class="reference internal" href="#task-instance-context-menu">Task Instance Context Menu</a></li>
+    {% for project_name, dag_list in all_dags.items() %} 
+        <ul class="current">
+            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>{{ project_name }}</a>
+            <ul>
+                {% for dag_name in dag_list %}
+                <li class="toctree-l2"><a class="reference internal" href="#dags-view">{{ dag_name }}</a></li>
+                {% endfor %}
+            </ul>
+            </li>
         </ul>
-        </li>
-    </ul>
+    {% endfor %}
 {% endblock dags %}
 
 {% block body %}

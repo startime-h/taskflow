@@ -18,7 +18,6 @@ T_TASK_PENDING_QUEUE = 'task_pending_queue'
 class UserInfo():
     '''
     @id: primary key
-    @user_id: user id
     @user_name: user name
     @user_password_hash: user password hash value
     @user_email: user email
@@ -26,7 +25,6 @@ class UserInfo():
     '''
 
     ID = 'id'
-    UserId = 'user_id'
     UserName = 'user_name'
     UserPasswordHash = 'user_password_hash'
     UserEmail = 'user_email'
@@ -35,7 +33,6 @@ class UserInfo():
 class ProjectInfo():
     '''
     @id: primary key
-    @project_id: project id
     @project_name: project name
     @create_user_id: create user id
     @create_time: create time
@@ -44,7 +41,6 @@ class ProjectInfo():
     '''
 
     ID = 'id'
-    ProjectId = 'project_id'
     ProjectName = 'project_name'
     CreateUserId = 'create_user_id'
     CreateTime = 'create_time'
@@ -58,7 +54,7 @@ class DagInfo():
     @dag_name: dag name
     @valid: 1: dag is valid
             0: dag is invalid
-    @project_id: dag project
+    @project_name: dag project name
     @create_user_id: create user id
     @create_time: dag create time
     @expire_time: dag expire time
@@ -78,7 +74,7 @@ class DagInfo():
     DagId = 'dag_id'
     DagName = 'dag_name'
     Valid = 'valid'
-    ProjectId = 'project_id'
+    ProjectName = 'project_name'
     CreateUserId = 'create_user_id'
     CreateTime = 'create_time'
     ExpireTime = 'expire_time'

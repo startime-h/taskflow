@@ -1,7 +1,6 @@
 ## 1.user info
 CREATE TABLE user_info (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_id VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_name VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_password_hash VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user_email VARCHAR(255) NOT NULL,  
@@ -10,14 +9,14 @@ CREATE TABLE user_info (
 );  
   
 id: 主键id  
-user_id: 用户id，类似工号，不重复  
 user_name: 用户名称  
+user_password_hash: 用户密码加密  
 user_email: 用户邮箱  
+register_time: 注册时间  
 
 ## 2.project_info  
 CREATE TABLE project_info (  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id   INT NOT NULL AUTO_INCREMENT,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_name VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_user_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_time  datetime NOT NULL,  
@@ -27,10 +26,10 @@ CREATE TABLE project_info (
 );  
 
 id: 主键id  
-project_id: 项目id，不重复，后台生成  
 project_name: 项目名称  
 create_uesr_id: 创建用户id  
 create_time: 创建时间  
+project_desc: 项目描述  
 permission_users: 有权限用户列表  
 
 ## 3.dag_info  
@@ -39,7 +38,7 @@ CREATE TABLE dag_info  (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_id  INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dag_name VARCHAR(255) NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;valid INT NOT NULL default 0,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_id INT NOT NULL,   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_name INT NOT NULL,   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_user_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expire_time datetime NOT NULL,  
@@ -56,7 +55,7 @@ id: 主键id
 dag_id: dag id，不重复，后台生成  
 dag_name: dag 名称  
 valid: 是否有效, 1表示有效，0表示无效  
-project_id: 所属project id  
+project_name: 所属project名称
 create_user_id: 创建用户id  
 create_time: 创建时间  
 expire_time: 失效时间  

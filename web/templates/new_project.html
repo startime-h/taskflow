@@ -32,12 +32,13 @@
                 <h2 class="text-center login-title">新建项目</h2>
                 <div class="account-wall">
                     <form class="form-signin" method="post" action="{{ url_for('new_project') }}">
-                        <input type="text" class="form-control" placeholder="project name" name="name" required autofocus>
+                        <input type="text" class="form-control" placeholder="project name" name="projectName" required autofocus>
                         <br/>
-                        <textarea class="form-control" rows="5" placeholder="project desc" name="desc"></textarea>
+                        <textarea class="form-control" rows="5" placeholder="project desc" name="projectDesc"></textarea>
                         <br/>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">New Register</button>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">New Project</button>
                         <br/>
+                        <input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
                     </form>
                 </div>
                 {% if alert %}

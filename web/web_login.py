@@ -36,7 +36,7 @@ class User(UserMixin):
             return None
 
     def __generate_user_id__(self):
-        return unicode(uuid.uuid4())
+        pass
 
     def get_id(self):
         if not self.has_exist_user():

@@ -19,7 +19,6 @@ def select_user_info(cond_map):
     Select user info record
 
     cond_map = {
-        user_id: user account
         user_name: user name
         user_email: user email
         ...
@@ -53,11 +52,10 @@ def has_user_info(user_name):
         return False
     return True
 
-def add_user_info(user_id, user_name, user_password_hash,user_email, register_time):
+def add_user_info(user_name, user_password_hash,user_email, register_time):
     '''
     Add user info record
 
-    @user_id: user id
     @user_name: user name
     @user_password_hash: user password hash
     @user_email: user email
@@ -69,7 +67,6 @@ def add_user_info(user_id, user_name, user_password_hash,user_email, register_ti
     # do insert
     table = table_struct.T_USER_INFO
     cond_map = {
-        table_struct.UserInfo.UserId: user_id,
         table_struct.UserInfo.UserName: user_name,
         table_struct.UserInfo.UserPasswordHash: user_password_hash,
         table_struct.UserInfo.UserEmail: user_email,
