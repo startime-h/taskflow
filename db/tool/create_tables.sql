@@ -30,7 +30,6 @@ CREATE TABLE dag_info  (
     project_name VARCHAR(255) NOT NULL, 
     create_user_id INT NOT NULL,
     create_time datetime NOT NULL,
-    expire_time datetime NOT NULL,
     scheduler_interval  INT NOT NULL,  
     skip_failed  INT NOT NULL default 0, 
     modify_time datetime NOT NULL,

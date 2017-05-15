@@ -41,7 +41,6 @@ CREATE TABLE dag_info  (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_name INT NOT NULL,   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_user_id INT NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create_time datetime NOT NULL,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expire_time datetime NOT NULL,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scheduler_interval  INT NOT NULL,    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;skip_failed INT NOT NULL default 0,  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify_time datetime NOT NULL,  
@@ -58,7 +57,6 @@ valid: 是否有效, 1表示有效，0表示无效
 project_name: 所属project名称
 create_user_id: 创建用户id  
 create_time: 创建时间  
-expire_time: 失效时间  
 scheduler_interval: 调度周期  
 skip_failed: 是否跳过failed节点 定期调度  
 modify_time: dag更新时间  

@@ -77,7 +77,6 @@ class DagInfo():
     ProjectName = 'project_name'
     CreateUserId = 'create_user_id'
     CreateTime = 'create_time'
-    ExpireTime = 'expire_time'
     SchedulerInterval = 'scheduler_interval'
     SkipFailed = 'skip_failed'
     ModifyTime = 'modify_time'

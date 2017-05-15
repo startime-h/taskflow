@@ -5,21 +5,6 @@
     <link href='/static/css/dataTables.bootstrap.css' rel="stylesheet" type="text/css" >
 {% endblock head %}
 
-{% block dags %}
-    {{ super() }}
-    {% for project_name, dag_list in all_dags.items() %} 
-        <ul class="current">
-            <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>{{ project_name }}</a>
-            <ul>
-                {% for dag_name in dag_list %}
-                <li class="toctree-l2"><a class="reference internal" href="#dags-view">{{ dag_name }}</a></li>
-                {% endfor %}
-            </ul>
-            </li>
-        </ul>
-    {% endfor %}
-{% endblock dags %}
-
 {% block body %}
     {{ super() }}
     <div class='page-header'>

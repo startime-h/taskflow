@@ -3,8 +3,9 @@
 {% block head %}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>{% block title %}Taskflow{% endblock title %}</title>
   <meta name="description" content="Taskflow is Distributed task scheduling system">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>{% block title %}Taskflow{% endblock title %}</title>
   <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -37,16 +38,6 @@
                       <li id="all_dags" class="active"><a href={{ url_for("dags") }}>流程列表</a></li>
                       {% else %}
                       <li id="all_dags"><a href={{ url_for("dags") }}>流程列表</a></li>
-                      {% endif %}
-                      {% if new_project_active %}
-                      <li id="new_project" class="active"><a href={{ url_for("new_project") }}>新建项目</a></li>
-                      {% else %}
-                      <li id="new_project"><a href={{ url_for("new_project") }}>新建项目</a></li>
-                      {% endif %}
-                      {% if new_dag_active %}
-                      <li id="new_dag" class="active"><a href={{ url_for("new_dag") }}>新建流程</a></li>
-                      {% else %}
-                      <li id="new_dag"><a href={{ url_for("new_dag") }}>新建流程</a></li>
                       {% endif %}
                       {% if permission_active %}
                       <li id="permission" class="active"><a href={{ url_for("permission") }}>权限管理</a></li>
@@ -81,26 +72,38 @@
     </div>
     <div id="nav-side">
         <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div id="nav-new-project">
+                <button type="button" class="btn btn-primary btn-sm btn-block">New Project</button>
+            </div>
             <div id="nav-side-tab">
                 <ul class="nav nav-tabs" id="myTab"> 
-                    <li class="active"><a onclick="getDags({{ user_id }})" data-toggle="tab">我的流程</a></li> 
+                    <li class="active"><a onclick="getDags({{ current_user.id }})" data-toggle="tab">我的流程</a></li> 
                     <li><a onclick="getDags(0)" data-toggle="tab">所有流程</a></li> 
                 </ul> 
             </div>
             <div id="nav-side-dags">
-                {% block dags %}
-                {% endblock dags %}
+                {% for project_dict in project_list %} 
+                    <ul class="current">
+                        <li class="toctree-l1 current"><a class="current reference internal" href="#"><span class="toctree-expand"></span>{{ project_dict['project'] }}</a>
+                        <ul>
+                            {% for dag_name in project_dict['dag_list'] %}
+                            <li class="toctree-l2"><a class="reference internal" href="#dags-view">{{ dag_name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        </li>
+                    </ul>
+                {% endfor %}
             </div>
         </nav>
     </div>
-    <div class="main_container">
+    <div class="main-container">
         {% block body %}
         {% endblock body %}
     </div>
   </div>
 
   {% block tail %}
-  <script src="/static/js/dags_base.js"></script>
+  <script src="/static/js/dag_base.js"></script>
   <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   {% endblock tail %}

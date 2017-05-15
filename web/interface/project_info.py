@@ -52,3 +52,25 @@ def add_new_project(project_name, project_desc, current_user_id):
         table_struct.ProjectInfo.PermissionUsers: permission_users
     }
     return project_info.add_project_info(cond_map)
+
+def get_user_project(user_id):
+    '''
+    get user all project
+
+    @user_id: user id, default equal 0
+
+    return list()/[]
+    '''
+    rows = project_info.select_all_project_info()
+    project_list = list()
+    project_name_field = table_struct.ProjectInfo.ProjectName
+    permission_users_field = table_struct.ProjectInfo.PermissionUsers
+    for project_dict in rows:
+        project_name = project_dict[project_name_field]
+        permission_users_list = project_dict[permission_users_field].split(',')
+        if user_id == 0:
+            project_list.append(project_name)
+        else:
+            if str(user_id) in permission_users_list:
+                project_list.append(project_name)
+    return project_list

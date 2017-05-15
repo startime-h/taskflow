@@ -75,52 +75,26 @@ def index():
 @app.route('/dags', methods=['GET'])
 @login_required
 def dags():
-    user_id = current_user.get_id()
     all_dags_active = 'True'
-    all_dags = {
-            'Project1': ['test_dag1', 'test_dag2', 'test_dag3'],
-            'Project2': ['test_dag1', 'test_dag2', 'test_dag3'],
-            'Project3': ['test_dag1', 'test_dag2', 'test_dag3'],
-            'Project4': ['test_dag1', 'test_dag2', 'test_dag3'],
-            'Project11': ['test_dag1', 'test_dag2', 'test_dag3'],
-            'Project12': ['test_dag1', 'test_dag2', 'test_dag3'],
-            'Project13': ['test_dag1', 'test_dag2', 'test_dag3'],
-            'Project14': ['test_dag1', 'test_dag2', 'test_dag3']
-    }
+    user_id = current_user.get_id()
+    project_list = dag_info.get_user_project(user_id)
     return render_template('all_dags.html', all_dags_active=all_dags_active, \
-           user_id = user_id, all_dags=all_dags)
-
-@app.route('/new_project', methods=['GET', 'POST'])
-@login_required
-def new_project():
-    new_project_active = 'True'
-    form = ProjectForm(request.form)
-    if form.validate_on_submit():
-        project_name = form.projectName.data
-        project_desc = form.projectDesc.data
-        current_user_id = current_user.get_id()
-        if project_info.has_exist_project(project_name):
-            return redirect(url_for('new_project', alert="Project already exists"))
-        if not project_info.add_new_project(project_name, project_desc, current_user_id):
-            return redirect(url_for('new_project'))
-        return redirect(url_for('dags'))
-    return render_template('new_project.html', form=form, new_project_active=new_project_active,\
-           alert=request.args.get('alert'))
-
-@app.route('/new_dag', methods=['GET'])
-@login_required
-def new_dag():
-    new_dag_active = 'True'
-    return render_template('new_dag.html', new_dag_active=new_dag_active)
+           project_list=project_list)
 
 @app.route('/permission', methods=['GET'])
 @login_required
 def permission():
     permission_active = 'True'
-    return render_template('permission.html', permission_active=permission_active)
+    user_id = current_user.get_id()
+    project_list = dag_info.get_user_project(user_id)
+    return render_template('permission.html', permission_active=permission_active, \
+           project_list=project_list)
 
 @app.route('/help', methods=['GET'])
 @login_required
 def help():
     help_active = 'True'
-    return render_template('help.html', help_active=help_active)
+    user_id = current_user.get_id()
+    project_list = dag_info.get_user_project(user_id)
+    return render_template('help.html', help_active=help_active, \
+           project_list=project_list)

@@ -151,15 +151,12 @@ def select_need_start_dag(current_time):
     '''
     table = table_struct.T_DAG_INFO
     mysql = mysql_wrapper.MysqlWrapper()
-    condition_str = '(%s = 1 and %s > \'%s\' and %s != \'%s\' and %s != \'%s\' and %s <= \'%s\') \
-            or (%s = 1 and %s > \'%s\' and %s = \'%s\' and %s = 1 and %s <= \'%s\')'% \
-            (table_struct.DagInfo.Valid, table_struct.DagInfo.ExpireTime, current_time, \
-             table_struct.DagInfo.DagStatus, status.DAG_RUNNING, table_struct.DagInfo.DagStatus, status.DAG_FAILED, \
-             table_struct.DagInfo.NextStartTime, current_time, \
-             table_struct.DagInfo.Valid, table_struct.DagInfo.ExpireTime, current_time, \
-             table_struct.DagInfo.DagStatus, status.DAG_FAILED, table_struct.DagInfo.SkipFailed, \
-             table_struct.DagInfo.NextStartTime, current_time
-            )
+    condition_str = '(%s = 1 and %s != \'%s\' and %s != \'%s\' and %s <= \'%s\') \
+            or (%s = 1 and %s = \'%s\' and %s = 1 and %s <= \'%s\')'% \
+            (table_struct.DagInfo.Valid, able_struct.DagInfo.DagStatus, status.DAG_RUNNING, \
+             table_struct.DagInfo.DagStatus, status.DAG_FAILED, table_struct.DagInfo.NextStartTime, \
+             current_time, table_struct.DagInfo.Valid, table_struct.DagInfo.DagStatus, \
+             status.DAG_FAILED, table_struct.DagInfo.SkipFailed, table_struct.DagInfo.NextStartTime, current_time)
     return select_dag_info_with_condition(condition_str)
 
 def update_dag_status_and_starttime(new_value_map):

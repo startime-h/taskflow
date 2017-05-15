@@ -15,6 +15,12 @@
     min-height: 100%;
 }
 
+#nav-new-project {
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 5px;
+}
+
 #nav-side-tab {
     padding-left: 4%;
     padding-right: 4%;
@@ -27,7 +33,7 @@
     overflow:auto; 
 }
 
-.main_container {
+.main-container {
     position: fixed;
     top: 50px;
     bottom: 0;

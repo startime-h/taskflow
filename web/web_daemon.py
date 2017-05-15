@@ -14,6 +14,8 @@ logger.setLevel(logging.INFO)
 from web_app import app
 from web_login import *
 from web_views import *
+from web_form import *
+from web_rest_api import *
 
 def start():
     '''
