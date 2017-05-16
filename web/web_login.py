@@ -11,8 +11,7 @@ import sys_path
 from datetime import datetime, timedelta
 from flask import render_template, url_for, redirect
 from flask_login import UserMixin, login_user, logout_user, login_required
-from werkzeug.security import generate_password_hash
-from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from common import logging_config
 from web_app import app, login_manager

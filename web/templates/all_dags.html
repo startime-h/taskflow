@@ -3,36 +3,113 @@
 {% block head %}
     {{ super() }}
     <link href='/static/css/dataTables.bootstrap.css' rel="stylesheet" type="text/css" >
+    <link href='/static/css/all_dags.css' rel="stylesheet" type="text/css" >
 {% endblock head %}
 
 {% block body %}
     {{ super() }}
-    <div class='page-header'>
-        <h3>流程列表</h3>
-    </div>
-    <div>
-        <table id="dags" class="dags-table table table-hover">
-            <thead>
-                <tr>
-                    <th>所属项目</th>
-                    <th>流程名称</th>
-                    <th>状态</th>
-                    <th>启动时间</th>
-                    <th>结束时间</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    <div id="page-body">
+        <div class="panel panel-success">
+            <div class="panel-heading">项目信息</div>
+            <div class="panel-body">
+                <p class="text-left">1.项目名称: test_project1</p>
+                <p class="text-left">2.创建时间: 2017-05-16 21:25:00</p>
+                <p class="text-left">3.创建用户: 陈国林</p>
+                <p class="text-left">4.项目简介: 无</p>
+                <p class="text-left">5.权限用户: 陈国林, 林国林</p>
+            </div>
         </div>
-        <div>
-           <ul class="pagination">
-            </ul> 
+        <div class="panel panel-success">
+            <div class="panel-heading">流程列表</div>
+        </div>
+        <div id="panel-dags">
+            <table class="table" id="dags-table"> 
+               <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>流程名称</th>
+                        <th>状态</th>
+                        <th>启动时间</th>
+                        <th>结束时间</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>test_dag1</td>
+                        <td>Running</td>
+                        <td>2017-05-17 10:00:00</td>
+                        <td>-</td>
+                    </tr>
+              </tbody> 
+            </table>
         </div>
     </div>
-{% endblock body %}
+    {% endblock body %}
 
-{% block tail %}
+    {% block tail %}
     {{ super() }}
-    <script src='/static/js/d3.v3.min.js'></script>
-{% endblock %}
+    {% endblock %}

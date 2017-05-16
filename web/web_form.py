@@ -10,9 +10,8 @@ import sys_path
 from wtforms import StringField, BooleanField, PasswordField
 from wtforms.validators import DataRequired
 from flask import render_template, request, redirect, url_for, abort
-from flask_login import current_user
-from flask_login import login_user, logout_user, login_required
 from flask_wtf import FlaskForm
+from flask_login import current_user, login_user, logout_user, login_required
 
 from web_app import app
 from web_login import User

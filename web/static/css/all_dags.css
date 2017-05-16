@@ -1,0 +1,17 @@
+#page-body {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    width: 81%;
+}
+
+.panel-heading {
+    font-size: 16px;
+}
+
+#panel-dags {
+    position: fixed; 
+    display: block;
+    height: 48%;
+    width: inherit;
+    overflow: auto;
+}

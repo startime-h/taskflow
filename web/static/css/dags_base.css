@@ -1,3 +1,7 @@
+.navbar-collapse {
+    font-size:16px;
+}
+
 .col-center-block {  
     float: none;  
     display: block;  
@@ -6,6 +10,7 @@
 }
 
 .wy-nav-side {
+    font-size:14px;
     position: fixed;
     top: 50px;
     bottom: 0;
@@ -15,7 +20,7 @@
     min-height: 100%;
 }
 
-#nav-new-project {
+#nav-side-new-project {
     padding-left: 4%;
     padding-right: 4%;
     padding-top: 5px;
@@ -29,7 +34,7 @@
 }
 
 #nav-side-dags {
-    height: 80%;
+    height: 75%;
     overflow:auto; 
 }
 
@@ -43,9 +48,3 @@
     min-height: 100%;
     z-index: 200;
 }
-
-.dags-table {
-    width: 80%;
-    padding-bottom: 20px;
-}
-

@@ -8,7 +8,6 @@ from setuptools import setup, find_packages
 setup_status = setup(
     name='taskflow',
     description='Programmatically author, schedule and monitor data pipelines',
-    license='Apache License 2.0',
     version='0.0.3',
     packages=find_packages(),
     include_package_data=True,

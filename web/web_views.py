@@ -8,18 +8,16 @@ import logging
 import sys_path
 
 from flask import render_template, request, redirect, url_for, abort
-from flask_login import current_user
-from flask_login import login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 from web_app import app
 from web_login import User
 from web_form import *
-from interface import project_info
-from interface import dag_info
+from interface import project_info, dag_info
+
 from common import logging_config
 logger = logging_config.webLogger()
 logger.setLevel(logging.INFO)
 
-##################       login/register views         #################
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm(request.form)
@@ -30,7 +28,7 @@ def register():
         email = request.form.get('email', None)
         user = User(user_name, password, email)
         if user.has_exist_user():
-            return redirect(url_for('register', alert="User already exists"))
+            return redirect(url_for('register', alert="用户已经存在."))
         user.register_new_user()
         return redirect(url_for('login'))
     return render_template('register.html', form=form,
@@ -49,11 +47,11 @@ def login():
         # check has in mysql
         user = User(user_name, password)
         if not user.validate():
-            return redirect(url_for('login', alert="Incorrect username or password"))
+            return redirect(url_for('login', alert="用户名或密码错误."))
         if not user.has_exist_user():
             return redirect(url_for('register'))
         if not user.verify_password(password):
-            return redirect(url_for('login', alert="Incorrect password"))
+            return redirect(url_for('login', alert="密码错误."))
         # cache session
         login_user(user, remember=remember_me)
         return redirect(url_for('dags'))
@@ -66,7 +64,6 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-######################       page views         #######################
 @app.route('/', methods=['GET'])
 @login_required
 def index():

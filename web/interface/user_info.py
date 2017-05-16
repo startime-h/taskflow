@@ -8,10 +8,9 @@ import logging
 import threading
 import sys_path
 
-from common import logging_config
-from common import time_util
-from db.interface import user_info
+from common import logging_config, time_util
 from db import table_struct
+from db.interface import user_info
 logger = logging_config.webLogger()
 logger.setLevel(logging.INFO)
 
